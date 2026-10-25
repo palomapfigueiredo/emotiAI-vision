@@ -38,5 +38,6 @@ da Computação, Universidade Paulista (UNIP), campus Limeira – SP.
 - Ana Clara Alves Candido
 - Luís Fillipe Lourenço de Faria
 - Paloma Eduarda Paulino Figueiredo
+- Matheus Henrique dos Santos
 
 Orientador: Danilo Rodrigues Pereira

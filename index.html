@@ -3,31 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EmotiAI Vision — Tutorial do código</title>
+<title>EmotiAI Vision — Guia passo a passo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
 <div class="layout">
 
 <nav class="side" id="sideNav">
   <div class="mobile-bar" id="mobileToggle">
     <div>
-      <div class="brand">EMOTIAI · VISION</div>
-      <div class="brand-sub" style="margin-bottom:0;">Tutorial do código ▾</div>
+      <div class="brand">EmotiAI Vision</div>
+      <div class="brand-sub" style="margin-bottom:0;">Guia passo a passo · Menu ▾</div>
     </div>
   </div>
-  <div class="brand" id="brandDesktop">EMOTIAI · VISION</div>
-  <div class="brand-sub" id="brandSubDesktop">Tutorial do código</div>
+  <div class="brand" id="brandDesktop">EmotiAI Vision</div>
+  <div class="brand-sub" id="brandSubDesktop">Guia passo a passo</div>
 
   <ul id="navList">
     <li><a href="#inicio">Início</a></li>
-    <li><a href="#teste-ao-vivo">Testar ao vivo ▶</a></li>
-    <li><a href="#arquitetura">Arquitetura geral</a></li>
-    <div class="navgroup-title">PASSO A PASSO</div>
+    <li><a href="#teste-ao-vivo">Teste pela sua câmera</a></li>
+    <li><a href="#arquitetura">Visão geral</a></li>
+    <div class="navgroup-title">Passo a passo</div>
     <li><a href="#camera">1 · Captura de vídeo <span class="mono-tag">camera/</span></a></li>
     <li><a href="#deteccao">2 · Detecção de pose <span class="mono-tag">detection/</span></a></li>
     <li><a href="#tracking">3 · Rastreamento <span class="mono-tag">tracking/</span></a></li>
@@ -36,7 +38,7 @@
     <li><a href="#metricas">6 · Métricas agregadas <span class="mono-tag">analysis/</span></a></li>
     <li><a href="#visualizacao">7 · Visualização debug <span class="mono-tag">debug/</span></a></li>
     <li><a href="#execucao">8 · Loop principal <span class="mono-tag">main.py</span></a></li>
-    <div class="navgroup-title">REFERÊNCIA</div>
+    <div class="navgroup-title">Para consultar</div>
     <li><a href="#configuracoes">Configurações</a></li>
     <li><a href="#executar">Como executar</a></li>
   </ul>
@@ -45,35 +47,33 @@
 <main>
 
   <section class="hero" id="inicio">
-    <div class="eyebrow">TUTORIAL TÉCNICO</div>
+    <div class="eyebrow">Guia passo a passo</div>
     <h1>Como o EmotiAI Vision enxerga participação em sala de aula</h1>
     <p class="lede">Este guia explica, módulo por módulo, o código real do projeto: uma pipeline local de visão computacional que estima postura corporal e participação observável a partir da câmera — sem reconhecer rostos, sem identificar pessoas e sem gravar imagem ou vídeo.</p>
 
     <div class="principles">
       <div class="principle">
-        <strong>SEM RECONHECIMENTO FACIAL</strong>
+        <strong>Sem reconhecer rostos</strong>
         <span>O sistema não processa identidade — apenas pontos anatômicos (ombros, cotovelos, punhos) de silhuetas.</span>
       </div>
       <div class="principle">
-        <strong>SEM ARMAZENAMENTO</strong>
+        <strong>Nada é gravado</strong>
         <span>Nenhum frame ou vídeo é salvo em disco. Só métricas agregadas e anônimas chegam ao console.</span>
       </div>
       <div class="principle">
-        <strong>IDENTIDADE TEMPORÁRIA</strong>
+        <strong>Ninguém é identificado</strong>
         <span>IDs como <code>track_1</code> existem apenas durante a sessão em execução e são descartados ao final.</span>
       </div>
     </div>
   </section>
 
   <section id="teste-ao-vivo">
-    <div class="eyebrow">MÃO NA MASSA</div>
-    <h2>Teste o funcionamento agora, pela sua câmera</h2>
-    <p class="lede">Esta caixa roda, direto no seu navegador, a mesma lógica do projeto — detecção de pose, regra de braço levantado e métrica de participação — usando a versão JavaScript/WASM do MediaPipe. Nenhum frame sai do seu computador.</p>
-
-    <div class="why" style="margin-bottom:22px;"><strong>Sobre isto não ser o código Python direto:</strong> um navegador não consegue executar o <code>main.py</code> do projeto (ele depende de OpenCV, de um ambiente Python local e de acesso direto à câmera do sistema). O que roda aqui é uma reimplementação fiel das mesmas regras — mesmos índices de landmark, mesma condição de braço levantado, mesma janela de agregação — usando o pacote oficial <code>@mediapipe/tasks-vision</code>, carregado de um CDN. É a forma mais próxima de "rodar o código" que dá para oferecer direto na página.</p></div>
+    <div class="eyebrow">Experimente</div>
+    <h2>Veja funcionando agora, pela sua câmera</h2>
+    <p class="lede">Ligue a câmera e levante o braço: o sistema encontra você na imagem, desenha o esqueleto do corpo e percebe o gesto. Nenhuma imagem é gravada nem enviada para a internet.</p>
 
     <div class="panel live-panel">
-      <div class="panel-head"><span class="file">demo/pose_web.js</span><span id="liveModelState">modelo não carregado</span></div>
+      <div class="panel-head"><span class="file">Demonstração ao vivo</span><span id="liveModelState">aguardando</span></div>
       <div class="live-body">
         <div class="live-video-wrap">
           <video id="liveVideo" class="live-video" playsinline autoplay muted></video>
@@ -92,15 +92,15 @@
         </div>
       </div>
       <div class="live-console" id="liveConsole">
-        <div class="live-console-line cm">// os relatórios de janela (iguais ao aggregator.py) aparecem aqui</div>
+        <div class="live-console-line cm">A cada 10 segundos, um resumo do que o sistema viu aparece aqui.</div>
       </div>
     </div>
   </section>
 
   <section id="arquitetura">
-    <div class="eyebrow">VISÃO GERAL</div>
+    <div class="eyebrow">Visão geral</div>
 
-    <h2>Arquitetura da pipeline</h2>
+    <h2>O caminho de cada imagem</h2>
     <p class="lede">Cada frame da câmera passa por seis estágios até virar uma métrica de participação. Nenhum estágio conhece a implementação do anterior — eles se comunicam por objetos simples (dataclasses), o que torna cada peça testável isoladamente.</p>
 
     <div class="panel pipeline">
@@ -137,7 +137,7 @@
   </section>
 
   <section id="camera">
-    <div class="eyebrow">PASSO 1</div>
+    <div class="eyebrow">Passo 1</div>
     <h2>Captura de vídeo</h2>
     <p class="lede">A câmera é a única fonte de dados do sistema. <code>CameraCapture</code> encapsula o <code>cv2.VideoCapture</code> e devolve frames já rotacionados, sem nunca gravá-los em disco.</p>
 
@@ -164,7 +164,7 @@
   </section>
 
   <section id="deteccao">
-    <div class="eyebrow">PASSO 2</div>
+    <div class="eyebrow">Passo 2</div>
     <h2>Detecção de pose com MediaPipe</h2>
     <p class="lede">Cada frame passa pelo modelo <code>pose_landmarker_lite.task</code> do MediaPipe, que devolve até 33 pontos anatômicos (landmarks) por pessoa — sem qualquer dado de identidade.</p>
 
@@ -200,7 +200,7 @@
   </section>
 
   <section id="tracking">
-    <div class="eyebrow">PASSO 3</div>
+    <div class="eyebrow">Passo 3</div>
     <h2>Rastreamento por proximidade</h2>
     <p class="lede">O MediaPipe não sabe quem é quem entre um frame e outro — só devolve poses soltas. O <code>PoseTracker</code> resolve isso comparando a distância entre o centro dos ombros de cada pose e os tracks já existentes.</p>
 
@@ -219,9 +219,9 @@
   </section>
 
   <section id="analise">
-    <div class="eyebrow">PASSO 4</div>
+    <div class="eyebrow">Passo 4</div>
     <h2>Análise de postura: braço levantado</h2>
-    <p class="lede">A "IA" de decisão aqui não é um modelo treinado — é uma regra geométrica interpretável sobre os landmarks, decidida por <code>ArmRaisedRule</code> e confirmada ao longo do tempo por <code>PostureAnalyzer</code>.</p>
+    <p class="lede">O sistema decide se um braço está levantado com uma regra geométrica simples sobre os pontos do corpo, aplicada por <code>ArmRaisedRule</code> e confirmada ao longo do tempo por <code>PostureAnalyzer</code>.</p>
 
     <h3>A regra geométrica</h3>
     <div class="panel">
@@ -250,7 +250,7 @@
   </section>
 
   <section id="eventos">
-    <div class="eyebrow">PASSO 5</div>
+    <div class="eyebrow">Passo 5</div>
     <h2>Eventos</h2>
     <p class="lede">Toda transição de estado relevante — pessoa detectada, pessoa perdida, braço subiu ou desceu — vira um <code>VisionEvent</code>: um registro imutável com tipo, id do track, confiança e timestamp.</p>
 
@@ -268,7 +268,7 @@
   </section>
 
   <section id="metricas">
-    <div class="eyebrow">PASSO 6</div>
+    <div class="eyebrow">Passo 6</div>
     <h2>Métricas agregadas e participação</h2>
     <p class="lede">A cada janela de <code>aggregation_window_seconds</code> (padrão: 10s), o <code>MetricsAggregator</code> resume tudo o que aconteceu em um único JSON — a única saída de dados do sistema além da janela de debug.</p>
 
@@ -294,7 +294,7 @@
   </section>
 
   <section id="visualizacao">
-    <div class="eyebrow">PASSO 7</div>
+    <div class="eyebrow">Passo 7</div>
     <h2>Visualização de debug</h2>
     <p class="lede"><code>DebugRenderer</code> desenha o esqueleto detectado sobre o frame ao vivo — só para desenvolvimento; pode ser desligado com <code>debug_mode=False</code> em produção, já que ele é o único ponto do sistema que exibe a imagem da câmera na tela.</p>
 
@@ -309,11 +309,10 @@
 cv2.line(frame, points[first], points[second], (<span class="kw">255, 170, 0</span>), <span class="kw">2</span>)
 cv2.circle(frame, point, <span class="kw">3</span>, (<span class="kw">0, 255, 0</span>), -<span class="kw">1</span>)</code></pre>
     </div>
-    <p>As mesmas cores usadas nesta página (o verde dos pontos, o âmbar das linhas) vêm diretamente dessas constantes RGB do renderer — a identidade visual do tutorial é a identidade visual da própria ferramenta de debug do projeto.</p>
   </section>
 
   <section id="execucao">
-    <div class="eyebrow">PASSO 8</div>
+    <div class="eyebrow">Passo 8</div>
     <h2>O loop principal</h2>
     <p class="lede"><code>main.py</code> não implementa nenhuma regra de visão — ele só orquestra a ordem: câmera → detecção → tracking → análise → eventos → agregação → (opcional) renderização. Também controla a taxa de processamento, independente da taxa de captura da câmera.</p>
 
@@ -335,7 +334,7 @@ cv2.circle(frame, point, <span class="kw">3</span>, (<span class="kw">0, 255, 0<
   </section>
 
   <section id="configuracoes">
-    <div class="eyebrow">REFERÊNCIA</div>
+    <div class="eyebrow">Para consultar</div>
     <h2>Configurações do MVP</h2>
     <p class="lede">Todo o comportamento ajustável do sistema fica em um único lugar, <code>config/settings.py</code>, validado no <code>__post_init__</code>.</p>
     <table>
@@ -353,7 +352,7 @@ cv2.circle(frame, point, <span class="kw">3</span>, (<span class="kw">0, 255, 0<
   </section>
 
   <section id="executar">
-    <div class="eyebrow">REFERÊNCIA</div>
+    <div class="eyebrow">Para consultar</div>
     <h2>Como executar</h2>
     <p class="lede">Dependências mínimas — só três pacotes:</p>
     <div class="tag-list">
@@ -370,7 +369,7 @@ cv2.circle(frame, point, <span class="kw">3</span>, (<span class="kw">0, 255, 0<
     <p>Os IDs de rastreamento (<code>track_1</code>, <code>track_2</code>...) só existem durante essa execução — encerrar o programa apaga qualquer memória de quem foi detectado.</p>
 
     <footer>
-      Tutorial gerado a partir do código-fonte de <strong>EmotiAI Vision</strong> — Ciência da Computação, UNIP Limeira.
+      Guia feito a partir do código-fonte do <strong>EmotiAI Vision</strong> — Ciência da Computação, UNIP Limeira.
     </footer>
   </section>
 

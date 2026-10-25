@@ -1,24 +1,22 @@
-# EmotiAI Vision — Tutorial do código
+# EmotiAI Vision — Guia passo a passo
 
 Site-tutorial que explica, módulo por módulo, o código do projeto
 [computacional-vision](https://github.com/<seu-usuario>/computacional-vision)
 (EmotiAI Vision) — um sistema de visão computacional que estima postura
 corporal e participação em sala de aula sem reconhecimento facial.
 
-🔴 **Ponto alto:** a seção "Testar ao vivo" roda, direto no navegador (pela
-sua câmera), uma reimplementação em JavaScript da mesma lógica de detecção
-de pose e da regra de "braço levantado" usada no projeto Python original.
+✋ **Ponto alto:** a seção "Teste pela sua câmera" mostra, ao vivo no navegador, o
+sistema encontrando a pessoa e percebendo o gesto de braço levantado.
 
 ## Estrutura
 
 ```
 ├── index.html        # Estrutura da página e conteúdo do tutorial
 ├── css/
-│   └── styles.css    # Todo o visual (tema escuro inspirado no debug/renderer.py)
+│   └── styles.css    # Todo o visual (tema claro, fonte Lexend, destaque amarelo)
 └── js/
-    ├── main.js        # Navegação lateral (scrollspy) e menu mobile
-    └── live-demo.js   # Demo ao vivo: MediaPipe Tasks Vision + tracker/regras
-                        # portados do projeto Python para JavaScript
+    ├── main.js        # Índice lateral, menu mobile e barra de progresso de leitura
+    └── live-demo.js   # Demonstração ao vivo pela câmera
 ```
 
 ## Como abrir

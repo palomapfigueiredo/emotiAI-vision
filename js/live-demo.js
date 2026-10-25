@@ -143,7 +143,7 @@
 
   async function ensureModel(){
     if (poseLandmarker) return poseLandmarker;
-    modelState.textContent = 'baixando modelo…';
+    modelState.textContent = 'preparando…';
     const { PoseLandmarker, FilesetResolver } = await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14');
     const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
     poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
@@ -156,7 +156,7 @@
       minPosePresenceConfidence: 0.5,
       minTrackingConfidence: 0.5,
     });
-    modelState.textContent = 'modelo pronto';
+    modelState.textContent = 'pronto';
     return poseLandmarker;
   }
 
@@ -165,13 +165,13 @@
     ctx.clearRect(0, 0, w, h);
     for (const t of tracks){
       const pts = t.landmarks.map(p => [p.x * w, p.y * h]);
-      ctx.strokeStyle = '#FFB454'; ctx.lineWidth = 2;
+      ctx.strokeStyle = '#FFD23F'; ctx.lineWidth = 3;
       for (const [a,b] of CONNECTIONS){
         if (!pts[a] || !pts[b]) continue;
         ctx.beginPath(); ctx.moveTo(pts[a][0], pts[a][1]); ctx.lineTo(pts[b][0], pts[b][1]); ctx.stroke();
       }
-      ctx.fillStyle = '#8CFF7A';
-      for (const [x,y] of pts){ ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2); ctx.fill(); }
+      ctx.fillStyle = '#FFFFFF';
+      for (const [x,y] of pts){ ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI*2); ctx.fill(); }
     }
   }
 
@@ -218,7 +218,13 @@
       const span = document.createElement('span');
       const on = t.leftRaised || t.rightRaised;
       span.className = 'badge' + (on ? ' on' : '');
-      span.textContent = `${t.id}: ${t.leftRaised ? 'ESQ↑' : 'esq↓'} ${t.rightRaised ? 'DIR↑' : 'dir↓'}`;
+      const n = t.id.replace('track_', '');
+      const lados = [];
+      if (t.leftRaised) lados.push('esquerdo');
+      if (t.rightRaised) lados.push('direito');
+      span.textContent = lados.length
+        ? `Pessoa ${n}: braço ${lados.join(' e ')} levantado`
+        : `Pessoa ${n}: braços abaixados`;
       badgesEl.appendChild(span);
     });
 
@@ -226,8 +232,9 @@
     mWindow.textContent = Math.max(0, Math.round(remainingMs / 1000)) + 's';
     if (report){
       mRatio.textContent = report.participation_ratio;
-      logLine('{ people_avg: ' + report.people_average + ', participating: ' + report.participating_people +
-        ', ratio: ' + report.participation_ratio + ' }');
+      logLine('Resumo dos últimos 10 segundos — média de pessoas: ' + report.people_average +
+        ' · pessoas que levantaram o braço: ' + report.participating_people +
+        ' · taxa de participação: ' + report.participation_ratio);
     }
 
     rafId = requestAnimationFrame(tick);
@@ -244,7 +251,7 @@
       canvas.width = video.videoWidth || 640;
       canvas.height = video.videoHeight || 480;
     } catch (err){
-      overlayMsg.textContent = 'Não foi possível acessar a câmera (' + err.message + '). Verifique as permissões do navegador.';
+      overlayMsg.textContent = 'Não foi possível usar a câmera. Verifique se o navegador tem permissão para acessá-la e tente de novo.';
       overlayMsg.style.display = 'flex';
       btn.textContent = 'Ligar câmera';
       btn.disabled = false;
@@ -253,9 +260,9 @@
     try{
       await ensureModel();
     } catch (err){
-      overlayMsg.textContent = 'Câmera ligada, mas não deu para baixar o modelo do MediaPipe (é preciso internet liberada para cdn.jsdelivr.net e storage.googleapis.com). Detalhe: ' + err.message;
+      overlayMsg.textContent = 'A câmera ligou, mas não foi possível carregar o detector. Confira sua conexão com a internet e tente de novo.';
       overlayMsg.style.display = 'flex';
-      modelState.textContent = 'modelo indisponível';
+      modelState.textContent = 'indisponível';
       btn.textContent = 'Ligar câmera';
       btn.disabled = false;
       stream.getTracks().forEach(tr => tr.stop());
@@ -267,7 +274,7 @@
     btn.textContent = 'Desligar câmera';
     btn.classList.add('stop');
     btn.disabled = false;
-    logLine('// câmera ligada — detectando poses localmente');
+    logLine('Câmera ligada. As imagens ficam só no seu computador.');
     tick();
   }
 

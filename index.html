@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101014">
-<meta name="description" content="Guia simples e interativo para entender como funciona o EmotiAI Vision.">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#101014" name="theme-color"/>
+<meta content="Guia simples e interativo para entender como funciona o EmotiAI Vision." name="description"/>
 <title>EmotiAI Vision — Guia explicado de forma simples</title>
 <style>
 :root{--bg:#0d0d12;--surface:#15151d;--surface2:#1b1b25;--text:#f3f2f7;--muted:#b6b4c4;--accent:#ff9f43;--accent2:#ffd0a0;--line:#30303d;--code:#0a0a0f;--good:#9fe3bd;--radius:18px;}
@@ -69,12 +70,12 @@ html[data-theme="light"] .theme-toggle{background:#fff;color:#20212a}
 </style>
 </head>
 <body id="topo">
-<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+<div aria-hidden="true" class="progress"><span id="progressBar"></span></div>
 <div class="layout">
 <aside>
-<button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav">Menu ☰</button>
+<button aria-controls="siteNav" aria-expanded="false" class="menu-toggle" id="menuToggle">Menu ☰</button>
 <div class="brand">EmotiAI <span>Vision</span></div><div class="brand-sub">Um guia passo a passo, sem complicação</div>
-<button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Ativar modo claro">☀️ <span id="themeToggleLabel">Ativar modo claro</span></button>
+<button aria-label="Ativar modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" type="button">☀️ <span id="themeToggleLabel">Ativar modo claro</span></button>
 <div class="nav-label">Explore o guia</div><nav id="siteNav"><a href="#início">Início</a>
 <a href="#experimente-com-sua-câmera">Experimente com sua câmera</a>
 <a href="#como-o-sistema-funciona">Como o sistema funciona</a>
@@ -94,57 +95,55 @@ html[data-theme="light"] .theme-toggle{background:#fff;color:#20212a}
 <header class="hero">
 <div class="eyebrow">Aprenda explorando</div>
 <h1>Entenda como o EmotiAI Vision observa movimentos</h1>
-<p>Já imaginou como um computador consegue perceber quando alguém levanta a mão? Vamos descobrir juntos, com exemplos simples e explicações passo a passo.</p>
+<p>Veja como o sistema detecta movimentos e organiza os resultados.</p>
 <div class="hero-pills"><span class="pill">✦ Linguagem simples</span><span class="pill">↗ Exemplos do dia a dia</span><span class="pill">⌘ Código explicado</span></div>
 </header>
-<article><h1 id="emotiai-vision-guia-explicado-de-forma-simples">EmotiAI Vision — Guia explicado de forma simples</h1>
-<blockquote>
-<p><strong>Objetivo deste guia:</strong> explicar como o EmotiAI Vision funciona com palavras simples, exemplos do dia a dia e passos curtos. Os nomes dos arquivos e os exemplos de código continuam disponíveis para quem quiser estudar a parte técnica.</p>
-</blockquote>
+<article>
+
 <hr/>
 <h2 id="início">Início</h2>
 <h1 id="como-o-emotiai-vision-observa-movimentos-em-uma-sala">Como o EmotiAI Vision observa movimentos em uma sala?</h1>
-<p>Imagine uma sala de aula e uma câmera apontada para as pessoas. O EmotiAI Vision é um projeto que analisa imagens da câmera para perceber alguns movimentos do corpo, como levantar a mão.</p>
-<p>Ele faz isso em várias etapas. Primeiro, recebe a imagem. Depois, procura pontos do corpo, acompanha onde eles estão e verifica se um braço parece estar levantado. Por fim, reúne os resultados em números que ajudam a entender o que aconteceu durante aquele período.</p>
-<p><strong>Importante:</strong> o sistema observa movimentos que podem ser vistos na imagem. Ele não sabe o que alguém está pensando, se está feliz, se está prestando atenção ou se aprendeu a matéria. Levantar a mão é um movimento observável; sentimentos e pensamentos não podem ser descobertos apenas por esse movimento.</p>
-<h3 id="três-cuidados-importantes">Três cuidados importantes</h3>
+<p>O EmotiAI Vision analisa imagens da câmera para identificar movimentos do corpo, como levantar a mão.</p>
+<p>O sistema captura a imagem, identifica pontos do corpo, acompanha as pessoas e verifica se os braços estão levantados. Depois, reúne os resultados em métricas.</p>
+<p><strong>Importante:</strong> o sistema identifica movimentos visíveis. Não consegue determinar pensamentos, emoções, atenção ou aprendizado.</p>
+
 <p><strong>Não tenta descobrir quem é a pessoa</strong><br/>
-O sistema usa pontos do corpo, como ombros, cotovelos e punhos. Ele não precisa reconhecer o rosto para analisar esses movimentos.</p>
+Analisa pontos do corpo, como ombros, cotovelos e punhos, sem precisar reconhecer o rosto.</p>
 <p><strong>Não guarda vídeos ou fotos no computador</strong><br/>
-De acordo com o projeto, os quadros da câmera são analisados durante a execução e não são salvos como arquivos de vídeo ou imagem. O programa reúne informações numéricas para mostrar um resumo.</p>
+As imagens são analisadas durante a execução, sem serem salvas como vídeos ou fotos; o programa reúne informações numéricas.</p>
 <p><strong>Os códigos de acompanhamento são temporários</strong><br/>
-O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para diferenciar as pessoas enquanto está funcionando. Esses códigos servem para o programa acompanhar os movimentos; não são nomes reais. Eles deixam de existir quando a execução termina.</p>
+Códigos como <code>track_1</code> e <code>track_2</code> ajudam a acompanhar movimentos durante a execução. Não identificam pessoas e são temporários.</p>
 <hr/>
 <h2 id="experimente-com-sua-câmera">Experimente com sua câmera</h2>
 <h1 id="vamos-testar">Vamos testar?</h1>
-<p>Se você permitir o acesso à câmera, a demonstração poderá mostrar como o sistema analisa os movimentos. Experimente ficar em frente à câmera e levantar um braço.</p>
-<div class="camera-demo live-panel" aria-label="Demonstração ao vivo de detecção de pose">
-  <div class="camera-copy">
-    <span class="eyebrow">Experiência interativa</span>
-    <h3>Vamos testar os gestos?</h3>
-    <p>Permita o acesso à câmera e fique de frente para ela. O modelo tentará identificar seu corpo e reconhecer quando você levantar um ou os dois braços.</p>
-    <button class="primary-btn live-btn" id="liveToggle" type="button">Ligar câmera</button>
-    <p class="camera-status" id="liveModelState" role="status">Modelo ainda não carregado.</p>
-    <p class="camera-status" id="liveOverlayHint">A câmera só será ativada quando você clicar no botão.</p>
-    <div class="metric-grid">
-      <div class="metric-card"><span class="metric-label">Pessoas detectadas</span><strong class="metric-value" id="mPeople">0</strong></div>
-      <div class="metric-card"><span class="metric-label">Braços levantados</span><strong class="metric-value" id="mArms">0</strong></div>
-      <div class="metric-card"><span class="metric-label">Participação</span><strong class="metric-value" id="mRatio">–</strong></div>
-      <div class="metric-card"><span class="metric-label">Próximo resumo</span><strong class="metric-value" id="mWindow">10s</strong></div>
-    </div>
-    <h3>Detecções atuais</h3>
-    <div class="badge-row" id="liveBadges"><span class="badge">Nenhuma pessoa detectada ainda.</span></div>
-  </div>
-  <div class="live-media">
-    <div class="live-video-wrap">
-      <video class="live-video" id="liveVideo" autoplay muted playsinline></video>
-      <canvas class="live-canvas" id="liveCanvas"></canvas>
-      <div class="live-overlay-msg" id="liveOverlayMsg">Clique em “Ligar câmera” para começar.</div>
-    </div>
-    <div class="live-console" id="liveConsole" aria-live="polite"><div class="live-console-line">Aguardando início da demonstração…</div></div>
-  </div>
+<p>Permita o acesso à câmera, fique de frente para ela e levante um braço para testar a detecção.</p>
+<div aria-label="Demonstração ao vivo de detecção de pose" class="camera-demo live-panel">
+<div class="camera-copy">
+<span class="eyebrow">Experiência interativa</span>
+<h3>Vamos testar os gestos?</h3>
+<p>Ative a câmera e levante um ou os dois braços para testar o modelo.</p>
+<button class="primary-btn live-btn" id="liveToggle" type="button">Ligar câmera</button>
+<p class="camera-status" id="liveModelState" role="status">Modelo ainda não carregado.</p>
+<p class="camera-status" id="liveOverlayHint">A câmera só será ativada quando você clicar no botão.</p>
+<div class="metric-grid">
+<div class="metric-card"><span class="metric-label">Pessoas detectadas</span><strong class="metric-value" id="mPeople">0</strong></div>
+<div class="metric-card"><span class="metric-label">Braços levantados</span><strong class="metric-value" id="mArms">0</strong></div>
+<div class="metric-card"><span class="metric-label">Participação</span><strong class="metric-value" id="mRatio">–</strong></div>
+<div class="metric-card"><span class="metric-label">Próximo resumo</span><strong class="metric-value" id="mWindow">10s</strong></div>
 </div>
-<p>As linhas laranjas e os pontos verdes mostram as partes do corpo estimadas pelo modelo. Os números mudam conforme as pessoas aparecem e levantam os braços. A detecção é feita no navegador; o modelo precisa ser baixado pela internet.</p>
+<h3>Detecções atuais</h3>
+<div class="badge-row" id="liveBadges"><span class="badge">Nenhuma pessoa detectada ainda.</span></div>
+</div>
+<div class="live-media">
+<div class="live-video-wrap">
+<video autoplay="" class="live-video" id="liveVideo" muted="" playsinline=""></video>
+<canvas class="live-canvas" id="liveCanvas"></canvas>
+<div class="live-overlay-msg" id="liveOverlayMsg">Clique em “Ligar câmera” para começar.</div>
+</div>
+<div aria-live="polite" class="live-console" id="liveConsole"><div class="live-console-line">Aguardando início da demonstração…</div></div>
+</div>
+</div>
+<p>Linhas laranjas e pontos verdes indicam as partes do corpo detectadas. O modelo é carregado pela internet e a análise ocorre no navegador.</p>
 <h3 id="o-que-significam-os-números">O que significam os números?</h3>
 <ul>
 <li><strong>Pessoas agora:</strong> quantas pessoas o sistema conseguiu detectar neste momento.</li>
@@ -152,11 +151,11 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
 <li><strong>Participação (10 s):</strong> um resumo calculado para uma janela de 10 segundos, de acordo com as regras do projeto. Isso não mede interesse, aprendizado ou atenção.</li>
 <li><strong>Próxima janela em:</strong> quanto falta para o sistema preparar o próximo resumo.</li>
 </ul>
-<p>A demonstração depende da câmera e do código configurado no projeto. Se algo não aparecer como esperado, confira se a câmera está disponível e se o navegador recebeu permissão para usá-la.</p>
+<p>Se a detecção não funcionar, confira a conexão com a internet e a permissão de uso da câmera no navegador.</p>
 <hr/>
 <h2 id="como-o-sistema-funciona">Como o sistema funciona</h2>
 <h1 id="o-caminho-da-imagem-oito-etapas">O caminho da imagem: oito etapas</h1>
-<p>Pense em uma linha de montagem. Um objeto passa por diferentes estações e cada estação faz uma tarefa. No EmotiAI Vision, a imagem também passa por etapas: cada parte do programa faz um trabalho específico e entrega o resultado para a próxima.</p>
+
 <ol type="1">
 <li><strong>Captura:</strong> a câmera entrega uma imagem ao programa.</li>
 <li><strong>Detecção de pose:</strong> o sistema procura pontos do corpo, como ombros, cotovelos e punhos.</li>
@@ -167,67 +166,28 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
 <li><strong>Visualização de depuração:</strong> durante os testes, o programa pode desenhar os pontos e as linhas sobre a imagem.</li>
 <li><strong>Loop principal:</strong> é a parte que organiza a ordem das tarefas e faz o processo se repetir.</li>
 </ol>
-<p>Cada etapa tem uma responsabilidade. Isso facilita entender, testar e corrigir o projeto sem precisar colocar tudo em um único arquivo.</p>
+
 <hr/>
 <h2 id="passo-1-captura-de-vídeo">Passo 1 — Captura de vídeo</h2>
 <h1 id="a-câmera-entrega-a-imagem">1. A câmera entrega a imagem</h1>
 <p><strong>Arquivo:</strong> <code>camera/capture.py</code></p>
-<p>Tudo começa com a câmera. Ela captura o que está à sua frente e entrega as imagens ao programa. Cada imagem recebida é chamada de <em>frame</em> — pense nela como uma fotografia muito rápida dentro de um vídeo.</p>
-<p>A classe <code>CameraCapture</code> é a parte do código responsável por conversar com a câmera. Ela configura detalhes como largura, altura, quantidade de imagens analisadas por segundo e rotação.</p>
-<h3 id="um-exemplo-simples">Um exemplo simples</h3>
-<p>Imagine que você está folheando um livro de desenhos animados. Cada página mostra o personagem em uma posição um pouquinho diferente. Quando as páginas passam rapidamente, parece que ele está se mexendo. A câmera entrega imagens de forma parecida: muitas imagens em sequência.</p>
-<h3 id="e-se-a-câmera-falhar">E se a câmera falhar?</h3>
-<p>O programa verifica se conseguiu receber uma imagem. Se a leitura falhar ou a câmera estiver desconectada, ele informa que houve um problema em vez de continuar como se tivesse recebido uma imagem válida.</p>
-<h3 id="por-que-o-código-libera-a-câmera">Por que o código libera a câmera?</h3>
-<p>Quando o programa termina, a câmera precisa ser liberada para que outros aplicativos possam usá-la. O código usa um recurso do Python que ajuda a garantir essa liberação mesmo se ocorrer um erro durante a execução.</p>
-<h3 id="configurações-da-câmera">Configurações da câmera</h3>
-<p>O arquivo <code>camera/config.py</code> reúne as opções da câmera, como resolução e rotação. O arquivo principal fornece essas configurações. Assim, a parte que captura a imagem não precisa saber como o restante do sistema analisa os movimentos: ela só precisa entregar as imagens corretamente.</p>
-<hr/>
+<p>A câmera captura imagens chamadas <em>frames</em>, que são analisadas em sequência.</p>
+<p>A classe <code>CameraCapture</code> acessa a câmera e configura resolução, frequência de análise e rotação.</p>
 <h2 id="passo-2-detecção-de-pose">Passo 2 — Detecção de pose</h2>
 <h1 id="o-sistema-procura-pontos-do-corpo">2. O sistema procura pontos do corpo</h1>
 <p><strong>Arquivo:</strong> <code>detection/pose_detector.py</code></p>
 <p>Agora que a imagem chegou, o sistema precisa encontrar partes do corpo. Para isso, o projeto usa o <strong>MediaPipe Pose Landmarker</strong>, uma ferramenta que estima pontos do corpo em uma imagem.</p>
 <p>Esses pontos são chamados de <em>landmarks</em>. Entre eles estão os ombros, os cotovelos, os punhos, os quadris e pontos das pernas. O modelo usado pelo projeto pode identificar até 33 pontos para cada pose detectada.</p>
-<h3 id="imagine-um-boneco-de-palitos">Imagine um boneco de palitos</h3>
-<p>Pense em um desenho de boneco feito com bolinhas e linhas. Cada bolinha marca uma parte do corpo, e cada linha mostra a ligação entre duas partes. O sistema usa pontos estimados de maneira parecida para entender a posição do corpo.</p>
-<p>Esses pontos são estimativas feitas pelo computador. Se uma parte estiver escondida, fora da imagem ou difícil de enxergar, o sistema pode ter menos certeza sobre sua posição.</p>
-<h3 id="por-que-existem-nomes-para-os-pontos">Por que existem nomes para os pontos?</h3>
-<p>O arquivo <code>detection/pose_landmarks.py</code> dá nomes aos pontos, como <code>left_shoulder</code> (ombro esquerdo) e <code>right_wrist</code> (punho direito). Isso é mais fácil de entender do que lembrar números, como “ponto 15” ou “ponto 16”.</p>
-<p>O código também verifica se os pontos parecem confiáveis. De forma simples, é como perguntar: “Consigo enxergar esse ponto com segurança suficiente para usá-lo?”</p>
-<h3 id="por-que-analisar-o-vídeo-em-sequência">Por que analisar o vídeo em sequência?</h3>
-<p>O programa recebe imagens continuamente, e não apenas uma fotografia isolada. Por isso, o sistema informa o momento de cada imagem ao MediaPipe. Isso ajuda a ferramenta a lidar com a sequência de imagens de maneira adequada.</p>
-<p><strong>Lembre-se:</strong> encontrar pontos do corpo não é o mesmo que reconhecer a identidade de uma pessoa. O objetivo desta etapa é estimar a posição do corpo, não descobrir o nome de quem aparece na câmera.</p>
-<hr/>
 <h2 id="passo-3-rastreamento">Passo 3 — Rastreamento</h2>
 <h1 id="como-o-sistema-acompanha-a-mesma-pessoa">3. Como o sistema acompanha a mesma pessoa?</h1>
 <p><strong>Arquivo:</strong> <code>tracking/tracker.py</code></p>
 <p>Imagine que duas pessoas estejam na frente da câmera. Em uma imagem, o sistema encontra dois conjuntos de pontos. Na imagem seguinte, ele encontra os pontos novamente. Como pode tentar saber qual conjunto corresponde a cada pessoa?</p>
 <p>É para isso que serve o <strong>rastreamento</strong> (<em>tracking</em>). O programa compara a posição dos pontos entre imagens consecutivas. Neste projeto, ele usa principalmente a proximidade entre os centros dos ombros.</p>
-<h3 id="um-exemplo">Um exemplo</h3>
-<p>Na primeira imagem, o conjunto de pontos A está do lado esquerdo e o conjunto B está do lado direito. Na próxima imagem, o sistema procura conjuntos em posições próximas para tentar continuar acompanhando cada um.</p>
-<p>Ele pode criar identificadores temporários, como <code>track_1</code> e <code>track_2</code>. Pense neles como etiquetas em dois objetos: ajudam o programa a não misturar os movimentos durante a execução, mas não revelam a identidade real das pessoas.</p>
-<h3 id="e-se-alguém-ficar-escondido-por-um-instante">E se alguém ficar escondido por um instante?</h3>
-<p>Uma pessoa pode passar atrás de outra ou sair parcialmente da imagem. O programa permite que um acompanhamento fique sem atualização por alguns frames antes de considerar que aquela pessoa desapareceu.</p>
-<p>Se o sistema não conseguir relacionar uma pose nova com um acompanhamento existente, poderá criar um novo identificador. Como a comparação é feita pela posição, o rastreamento pode se confundir em algumas situações — por exemplo, quando pessoas se cruzam ou ficam muito próximas.</p>
-<h3 id="por-que-essa-etapa-é-importante">Por que essa etapa é importante?</h3>
-<p>Sem o rastreamento, o programa teria mais dificuldade para entender que os pontos vistos agora podem pertencer à mesma pessoa que apareceu na imagem anterior. Essa etapa ajuda a organizar os movimentos ao longo do tempo.</p>
-<hr/>
 <h2 id="passo-4-análise-de-postura">Passo 4 — Análise de postura</h2>
 <h1 id="como-o-sistema-percebe-um-braço-levantado">4. Como o sistema percebe um braço levantado?</h1>
 <p><strong>Arquivos:</strong> <code>analysis/arm_detection.py</code> e <code>analysis/posture_detection.py</code></p>
 <p>O sistema já encontrou os pontos do corpo e está tentando acompanhá-los. Agora ele verifica uma pergunta específica: <strong>a posição dos pontos indica que um braço está levantado?</strong></p>
 <p>Para responder, o programa compara a altura de pontos como o punho, o ombro, o cotovelo e, quando está visível, o quadril.</p>
-<h3 id="a-regra-em-palavras-simples">A regra em palavras simples</h3>
-<p>Em uma imagem de computador, os pontos mais altos costumam ter um valor vertical menor. Por isso, para verificar se a mão está acima do ombro, o código compara as posições do punho e do ombro. Ele também verifica a posição do cotovelo em relação ao quadril.</p>
-<p>O programa usa uma pequena margem para evitar que uma diferença mínima ou um tremor faça o braço mudar de estado por engano.</p>
-<p>Se o quadril não estiver visível, o sistema pode usar uma regra mais simples, baseada no punho e no ombro. Nesse caso, ele tem menos informação para fazer a análise.</p>
-<h3 id="por-que-não-decidir-com-apenas-uma-imagem">Por que não decidir com apenas uma imagem?</h3>
-<p>Imagine que você levante a mão e mexa um pouquinho o braço. A posição estimada pode variar de uma imagem para outra. Se o programa reagisse a cada pequena mudança, poderia dizer que o braço subiu e desceu várias vezes, mesmo sem isso ter acontecido de verdade.</p>
-<p>Para reduzir esse problema, o projeto espera que a mesma situação apareça em vários frames seguidos. A configuração padrão exige <strong>5 frames consecutivos</strong> antes de confirmar a mudança.</p>
-<h3 id="e-se-o-sistema-não-conseguir-enxergar-bem-o-braço">E se o sistema não conseguir enxergar bem o braço?</h3>
-<p>Em vez de assumir automaticamente que o braço está abaixado, o programa pode tratar a situação como desconhecida quando os pontos não são confiáveis. Assim, evita registrar uma mudança apenas porque alguém ficou escondido ou saiu parcialmente da imagem.</p>
-<p><strong>Importante:</strong> essa regra identifica uma posição estimada do braço. Ela não consegue saber por que a pessoa levantou a mão nem se ela deseja fazer uma pergunta.</p>
-<hr/>
 <h2 id="passo-5-eventos">Passo 5 — Eventos</h2>
 <h1 id="como-o-sistema-registra-o-que-aconteceu">5. Como o sistema registra o que aconteceu?</h1>
 <p><strong>Arquivo:</strong> <code>events/event.py</code></p>
@@ -241,40 +201,16 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
 <li>Os dois braços foram reconhecidos como levantados.</li>
 </ul>
 <p>Cada evento pode guardar informações como o tipo de mudança, o identificador temporário da pessoa, o nível de confiança e o momento em que ocorreu.</p>
-<h3 id="o-evento-é-um-resumo-de-uma-mudança">O evento é um resumo de uma mudança</h3>
-<p>O programa não precisa escrever todos os detalhes de todas as imagens para registrar que um braço passou de abaixado para levantado. Ele registra a mudança relevante.</p>
-<p>O <code>EventManager</code> organiza a criação desses registros e escreve informações no log do programa. Ele não mantém um histórico completo e permanente de todos os eventos; os registros são encaminhados para a etapa que prepara os resumos.</p>
-<hr/>
 <h2 id="passo-6-métricas-agregadas">Passo 6 — Métricas agregadas</h2>
 <h1 id="de-muitos-acontecimentos-para-um-resumo">6. De muitos acontecimentos para um resumo</h1>
 <p><strong>Arquivos:</strong> <code>analysis/aggregator.py</code> e <code>analysis/participation.py</code></p>
 <p>Até aqui, o sistema recebeu muitas imagens e pode ter identificado várias mudanças. Ler cada acontecimento separadamente seria trabalhoso. Por isso, o projeto reúne os resultados em intervalos de tempo.</p>
 <p>O tempo padrão de cada intervalo é <strong>10 segundos</strong>. Esse período é chamado de <em>janela de agregação</em>.</p>
-<h3 id="pense-em-uma-contagem-de-brincadeira">Pense em uma contagem de brincadeira</h3>
-<p>Imagine que, durante dez segundos, três pessoas diferentes levantem a mão. Em vez de mostrar cada detalhe para sempre, o programa prepara um resumo com números sobre o que observou naquele intervalo.</p>
-<p>O resumo pode incluir:</p>
-<ul>
-<li><strong>Média de pessoas:</strong> a quantidade média de pessoas detectadas durante o intervalo.</li>
-<li><strong>Máximo de pessoas:</strong> o maior número de pessoas detectadas em um momento daquele intervalo.</li>
-<li><strong>Pessoas que participaram:</strong> quantas pessoas diferentes foram contadas como participantes pelas regras do sistema.</li>
-<li><strong>Eventos de braços levantados:</strong> quantas vezes foram registrados eventos desse tipo.</li>
-<li><strong>Taxa de participação:</strong> uma proporção calculada a partir das pessoas participantes e da média de pessoas detectadas.</li>
-</ul>
-<h3 id="o-que-a-taxa-de-participação-quer-dizer">O que a taxa de participação quer dizer?</h3>
-<p>A taxa usa informações observáveis, como quantas pessoas diferentes levantaram o braço durante o intervalo e a média de pessoas detectadas. Ela não mede sentimentos, satisfação, atenção ou aprendizado.</p>
-<p>Por exemplo, uma pessoa pode estar prestando muita atenção sem levantar a mão. Outra pode levantar a mão por vários motivos. O sistema não sabe o motivo: ele só analisa movimentos que consegue observar.</p>
-<p>O projeto reúne esses valores em um resumo no formato JSON, que é uma maneira organizada de guardar informações usando nomes e valores. Por exemplo, um campo pode ter o nome <code>people_max</code> e guardar o maior número de pessoas detectadas naquele intervalo.</p>
-<p><strong>Atenção:</strong> os números dependem da qualidade da imagem e das estimativas do sistema. Eles devem ser interpretados como estimativas dos movimentos observados, não como uma avaliação completa das pessoas.</p>
-<hr/>
 <h2 id="passo-7-visualização-de-depuração">Passo 7 — Visualização de depuração</h2>
 <h1 id="por-que-aparecem-linhas-e-pontos-sobre-o-corpo">7. Por que aparecem linhas e pontos sobre o corpo?</h1>
 <p><strong>Arquivo:</strong> <code>debug/renderer.py</code></p>
 <p>Durante o desenvolvimento, é útil ver o que o sistema está detectando. A parte chamada <code>DebugRenderer</code> desenha pontos e linhas sobre a imagem da câmera.</p>
 <p>As bolinhas indicam os pontos estimados do corpo, enquanto as linhas ligam esses pontos para formar uma espécie de esqueleto. Assim, quem está testando o projeto consegue observar se o sistema encontrou os ombros, os cotovelos e os punhos nas posições esperadas.</p>
-<h3 id="para-que-serve-essa-visualização">Para que serve essa visualização?</h3>
-<p>Imagine tentar montar um quebra-cabeça sem olhar a imagem que está formando. Seria difícil saber se as peças estão no lugar certo. A visualização de depuração funciona como uma ajuda visual para conferir o resultado do sistema.</p>
-<p>Essa visualização é voltada para testes e desenvolvimento. O projeto permite desligá-la usando a configuração <code>debug_mode=False</code>. Quando ela está desligada, o esqueleto deixa de ser desenhado na tela pela etapa de depuração.</p>
-<hr/>
 <h2 id="passo-8-o-loop-principal">Passo 8 — O loop principal</h2>
 <h1 id="como-tudo-funciona-junto">8. Como tudo funciona junto?</h1>
 <p><strong>Arquivo:</strong> <code>main.py</code></p>
@@ -290,15 +226,10 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
 <li>Mostra a visualização de depuração, se ela estiver ativada.</li>
 <li>Repete o processo enquanto o programa estiver funcionando.</li>
 </ol>
-<h3 id="por-que-não-analisar-todas-as-imagens">Por que não analisar todas as imagens?</h3>
-<p>A câmera pode entregar muitas imagens por segundo. Analisar cada uma delas pode exigir mais trabalho do computador do que o necessário para este projeto.</p>
-<p>Por isso, o programa tem uma configuração que controla quantas imagens serão processadas por segundo. Por exemplo, a câmera pode fornecer 30 imagens por segundo, enquanto o sistema analisa 10. Nesse caso, ele não precisa fazer a análise completa de todas as imagens recebidas.</p>
-<p>Isso ajuda a controlar o uso dos recursos do computador, sem confundir a velocidade da câmera com a velocidade de análise do sistema.</p>
-<hr/>
 <h2 id="configurações-do-projeto">Configurações do projeto</h2>
 <h1 id="o-que-é-possível-ajustar">O que é possível ajustar?</h1>
 <p><strong>Arquivo:</strong> <code>config/settings.py</code></p>
-<p>As configurações são como os controles de um jogo: permitem mudar alguns comportamentos do programa sem precisar reescrever toda a lógica.</p>
+
 <table>
 <colgroup>
 <col style="width: 30%"/>
@@ -364,7 +295,7 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
 <hr/>
 <h2 id="como-executar-o-projeto">Como executar o projeto</h2>
 <h1 id="vamos-colocar-o-emotiai-vision-para-funcionar">Vamos colocar o EmotiAI Vision para funcionar?</h1>
-<p>Para executar o projeto, é necessário ter o ambiente preparado e instalar as bibliotecas usadas pelo código. As bibliotecas são conjuntos de ferramentas que ajudam o programa a realizar tarefas específicas.</p>
+
 <p>O guia do projeto lista estas dependências:</p>
 <ul>
 <li><code>mediapipe</code> — ajuda a estimar os pontos do corpo.</li>
@@ -375,21 +306,20 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
 <p>No terminal, entre na pasta do projeto e execute o programa usando o Python do ambiente virtual configurado:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="bu">cd</span> app/computacional-vision</span>
 <span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="ex">./venv/bin/python</span> main.py</span></code></pre></div>
-<p>O comando acima corresponde ao exemplo do projeto e pressupõe que o ambiente virtual esteja nesse caminho e que as dependências já estejam instaladas. Em outros sistemas operacionais, o caminho para o Python do ambiente virtual pode ser diferente.</p>
+
 <p>Se a janela de depuração estiver aberta, o guia do projeto indica que a tecla <strong>Q</strong> pode ser usada para encerrar essa janela.</p>
 <h3 id="o-que-acontece-quando-o-programa-termina">O que acontece quando o programa termina?</h3>
-<p>Os identificadores temporários, como <code>track_1</code> e <code>track_2</code>, são usados durante a execução. Quando o programa termina, eles deixam de ser mantidos para aquela sessão.</p>
+
 <hr/>
 <h2 id="para-lembrar">Para lembrar</h2>
-<p>O EmotiAI Vision segue uma sequência de tarefas: recebe imagens, estima pontos do corpo, tenta acompanhar as pessoas, verifica movimentos específicos e reúne os resultados em números.</p>
-<p>A principal ideia é <strong>contar movimentos que podem ser observados</strong>, como levantar um braço. O sistema não descobre pensamentos, emoções, intenções ou o quanto alguém aprendeu.</p>
-<p>Este guia foi elaborado a partir da descrição e dos trechos de código fornecidos para o EmotiAI Vision, projeto de Ciência da Computação da UNIP Limeira.</p>
 
-<div class="footer">Guia educativo do projeto <strong>EmotiAI Vision</strong> — Ciência da Computação, UNIP Limeira.<br>O sistema estima movimentos visíveis; não identifica pessoas nem mede sentimentos, atenção ou aprendizado.</div>
+
+<p>Este guia foi elaborado a partir da descrição e dos trechos de código fornecidos para o EmotiAI Vision, projeto de Ciência da Computação da UNIP Limeira.</p>
+<div class="footer">Guia educativo do projeto <strong>EmotiAI Vision</strong> — Ciência da Computação, UNIP Limeira.<br/>O sistema estima movimentos visíveis; não identifica pessoas nem mede sentimentos, atenção ou aprendizado.</div>
 </article>
 </main>
 </div>
-<a class="backtop" href="#topo" id="backTop" aria-label="Voltar ao topo">↑ Início</a>
+<a aria-label="Voltar ao topo" class="backtop" href="#topo" id="backTop">↑ Início</a>
 <script>
 (() => {
   const bar = document.getElementById('progressBar');

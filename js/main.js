@@ -1,4 +1,4 @@
-  // toggle mobile nav
+// toggle mobile nav
   const sideNav = document.getElementById('sideNav');
   document.getElementById('mobileToggle').addEventListener('click', () => {
     sideNav.classList.toggle('open');
@@ -23,14 +23,3 @@
   links.forEach(a => a.addEventListener('click', () => {
     sideNav.classList.remove('open');
   }));
-
-  // barra de progresso de leitura
-  const progressBar = document.getElementById('progressBar');
-  const updateProgress = () => {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0;
-    if (progressBar) progressBar.style.width = pct + '%';
-  };
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  window.addEventListener('resize', updateProgress);
-  updateProgress();

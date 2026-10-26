@@ -40,6 +40,32 @@ html[data-theme="light"] .menu-toggle{color:#20212a}
 html[data-theme="light"] .theme-toggle{background:#fff;color:#20212a}
 @media(max-width:900px){.theme-toggle{margin:10px 0 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* Demonstração real de pose com MediaPipe */
+.live-panel{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:22px}
+.live-body{display:grid;grid-template-columns:1fr 270px}
+.live-media{min-width:0}
+.live-video-wrap{position:relative;aspect-ratio:4/3;min-height:250px;background:#09090d;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.live-video,.live-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.live-video{display:block;min-height:0}
+.live-canvas{z-index:2}
+.live-overlay-msg{position:absolute;z-index:3;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff;background:rgba(9,9,13,.62)}
+.live-overlay-msg[hidden]{display:none}
+.live-console{margin-top:12px;padding:12px 14px;background:var(--code);border:1px solid var(--line);border-radius:12px;max-height:150px;overflow:auto;font: .78rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--text)}
+.live-console-line{margin:3px 0}
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
+.metric-card{padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid var(--line)}
+.metric-label{display:block;font-size:.75rem;color:var(--muted);line-height:1.35}
+.metric-value{display:block;font-size:1.45rem;line-height:1.4;color:var(--text)}
+.badge-row{display:flex;flex-direction:column;gap:7px}
+.badge-row .badge{padding:7px 10px;border-radius:9px;background:var(--surface2);font-size:.8rem;color:var(--muted)}
+.badge-row .badge.on{background:#176b43;color:#fff}
+.live-btn.stop{background:#d94f3d;color:white}
+.live-btn:disabled{opacity:.65;cursor:wait}
+#liveModelState{font-weight:700}
+@media(min-width:900px){.live-panel{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}}
+@media(max-width:640px){.live-panel{padding:14px}.live-video-wrap{min-height:190px}.metric-value{font-size:1.25rem}}
+
 </style>
 </head>
 <body id="topo">
@@ -92,11 +118,33 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
 <h2 id="experimente-com-sua-câmera">Experimente com sua câmera</h2>
 <h1 id="vamos-testar">Vamos testar?</h1>
 <p>Se você permitir o acesso à câmera, a demonstração poderá mostrar como o sistema analisa os movimentos. Experimente ficar em frente à câmera e levantar um braço.</p>
-<div aria-label="Prévia opcional da câmera" class="camera-demo">
-<div class="camera-copy"><span class="eyebrow">Experiência opcional</span><h3>Quer testar a câmera?</h3><p>Você pode ligar a câmera para ver a imagem ao vivo. Esta prévia isolada mostra apenas o vídeo; ela não executa a detecção de pose do projeto original.</p><button class="primary-btn" id="cameraToggle" type="button">Ligar câmera</button><p class="camera-status" id="cameraStatus" role="status">Câmera desligada. O acesso só começa quando você clicar no botão.</p></div>
-<div class="video-frame"><video autoplay="" id="cameraVideo" muted="" playsinline=""></video><div class="video-placeholder" id="cameraPlaceholder"><span>◎</span><p>A imagem da câmera aparecerá aqui</p></div></div>
+<div class="camera-demo live-panel" aria-label="Demonstração ao vivo de detecção de pose">
+  <div class="camera-copy">
+    <span class="eyebrow">Experiência interativa</span>
+    <h3>Vamos testar os gestos?</h3>
+    <p>Permita o acesso à câmera e fique de frente para ela. O modelo tentará identificar seu corpo e reconhecer quando você levantar um ou os dois braços.</p>
+    <button class="primary-btn live-btn" id="liveToggle" type="button">Ligar câmera</button>
+    <p class="camera-status" id="liveModelState" role="status">Modelo ainda não carregado.</p>
+    <p class="camera-status" id="liveOverlayHint">A câmera só será ativada quando você clicar no botão.</p>
+    <div class="metric-grid">
+      <div class="metric-card"><span class="metric-label">Pessoas detectadas</span><strong class="metric-value" id="mPeople">0</strong></div>
+      <div class="metric-card"><span class="metric-label">Braços levantados</span><strong class="metric-value" id="mArms">0</strong></div>
+      <div class="metric-card"><span class="metric-label">Participação</span><strong class="metric-value" id="mRatio">–</strong></div>
+      <div class="metric-card"><span class="metric-label">Próximo resumo</span><strong class="metric-value" id="mWindow">10s</strong></div>
+    </div>
+    <h3>Detecções atuais</h3>
+    <div class="badge-row" id="liveBadges"><span class="badge">Nenhuma pessoa detectada ainda.</span></div>
+  </div>
+  <div class="live-media">
+    <div class="live-video-wrap">
+      <video class="live-video" id="liveVideo" autoplay muted playsinline></video>
+      <canvas class="live-canvas" id="liveCanvas"></canvas>
+      <div class="live-overlay-msg" id="liveOverlayMsg">Clique em “Ligar câmera” para começar.</div>
+    </div>
+    <div class="live-console" id="liveConsole" aria-live="polite"><div class="live-console-line">Aguardando início da demonstração…</div></div>
+  </div>
 </div>
-<p>Observe os pontos e as linhas desenhados sobre o corpo. Eles funcionam como um esqueleto de brinquedo: ajudam o computador a estimar onde estão partes do corpo e como elas se movimentam.</p>
+<p>As linhas laranjas e os pontos verdes mostram as partes do corpo estimadas pelo modelo. Os números mudam conforme as pessoas aparecem e levantam os braços. A detecção é feita no navegador; o modelo precisa ser baixado pela internet.</p>
 <h3 id="o-que-significam-os-números">O que significam os números?</h3>
 <ul>
 <li><strong>Pessoas agora:</strong> quantas pessoas o sistema conseguiu detectar neste momento.</li>
@@ -385,18 +433,584 @@ O sistema pode usar nomes como <code>track_1</code> e <code>track_2</code> para 
     }), {rootMargin:'-15% 0px -75% 0px'});
     headings.forEach(h => observer.observe(h));
   }
-  const video = document.getElementById('cameraVideo');
-  const placeholder = document.getElementById('cameraPlaceholder');
-  const toggle = document.getElementById('cameraToggle');
-  const status = document.getElementById('cameraStatus');
-  let stream = null;
-  if (toggle && video) toggle.addEventListener('click', async () => {
-    if (stream) { stream.getTracks().forEach(track => track.stop()); stream = null; video.srcObject = null; video.style.display='none'; placeholder.style.display='block'; toggle.textContent='Ligar câmera'; status.textContent='Câmera desligada.'; return; }
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { status.textContent='Este navegador não permite acessar a câmera neste contexto. Tente abrir o site por HTTPS ou localhost.'; return; }
-    try { stream = await navigator.mediaDevices.getUserMedia({video:true,audio:false}); video.srcObject=stream; video.style.display='block'; placeholder.style.display='none'; toggle.textContent='Desligar câmera'; status.textContent='Câmera ligada. Esta é apenas uma prévia do vídeo, sem detecção de pose.'; }
-    catch (e) { status.textContent='Não foi possível abrir a câmera. Verifique a permissão do navegador e se outro aplicativo está usando o dispositivo.'; }
-  });
-  window.addEventListener('pagehide', () => { if (stream) stream.getTracks().forEach(track => track.stop()); });
-})();
+  window.addEventListener('pagehide', () => {});
+})(); 
+</script>
+<script>
+ // ---------- Demo ao vivo: porta em JS da mesma lógica do projeto Python ----------
+
+  // Landmarks usados (mesmos índices de detection/pose_landmarks.py)
+
+  const IDX = {
+
+    left_shoulder: 11, right_shoulder: 12,
+
+    left_elbow: 13, right_elbow: 14,
+
+    left_wrist: 15, right_wrist: 16,
+
+    left_hip: 23, right_hip: 24,
+
+  };
+
+  const CONNECTIONS = [
+
+    [11,12],[11,13],[13,15],[12,14],[14,16],
+
+    [11,23],[12,24],[23,24],
+
+    [23,25],[25,27],[24,26],[26,28],
+
+  ];
+
+
+
+  const MIN_CONF = 0.5;
+
+  const WRIST_MARGIN = 0.035;
+
+  const REQUIRED_FRAMES = 5;
+
+  const MAX_DIST = 0.18;
+
+  const MAX_MISSED = 8;
+
+  const WINDOW_MS = 10000;
+
+
+
+  function vis(landmarks, i){
+
+    const p = landmarks[i];
+
+    if (!p) return 0;
+
+    const v = p.visibility ?? 1, pr = p.presence ?? 1;
+
+    return Math.min(v, pr);
+
+  }
+
+
+
+  function isRaised(landmarks, side){
+
+    const s = side === 'left' ? IDX.left_shoulder : IDX.right_shoulder;
+
+    const e = side === 'left' ? IDX.left_elbow : IDX.right_elbow;
+
+    const w = side === 'left' ? IDX.left_wrist : IDX.right_wrist;
+
+    const h = side === 'left' ? IDX.left_hip : IDX.right_hip;
+
+    const wristAboveShoulder = landmarks[w].y < landmarks[s].y - WRIST_MARGIN;
+
+    const hipConf = vis(landmarks, h);
+
+    if (hipConf < MIN_CONF) return wristAboveShoulder;
+
+    const elbowAboveHip = landmarks[e].y < landmarks[h].y;
+
+    return wristAboveShoulder && elbowAboveHip;
+
+  }
+
+
+
+  function evaluateArms(landmarks){
+
+    const leftConf = Math.min(vis(landmarks, IDX.left_shoulder), vis(landmarks, IDX.left_elbow), vis(landmarks, IDX.left_wrist));
+
+    const rightConf = Math.min(vis(landmarks, IDX.right_shoulder), vis(landmarks, IDX.right_elbow), vis(landmarks, IDX.right_wrist));
+
+    const leftConfident = leftConf >= MIN_CONF, rightConfident = rightConf >= MIN_CONF;
+
+    if (!leftConfident && !rightConfident) return null;
+
+    return {
+
+      leftRaised: leftConfident && isRaised(landmarks, 'left'),
+
+      rightRaised: rightConfident && isRaised(landmarks, 'right'),
+
+      leftConfident, rightConfident,
+
+    };
+
+  }
+
+
+
+  function center(landmarks){
+
+    const l = landmarks[IDX.left_shoulder], r = landmarks[IDX.right_shoulder];
+
+    return [(l.x + r.x) / 2, (l.y + r.y) / 2];
+
+  }
+
+
+
+  function dist(a, b){ return Math.hypot(a[0]-b[0], a[1]-b[1]); }
+
+
+
+  class Tracker{
+
+    constructor(){ this.tracks = new Map(); this.nextId = 1; }
+
+    update(posesLandmarks){
+
+      const candidates = [];
+
+      for (const [tid, t] of this.tracks){
+
+        posesLandmarks.forEach((lm, pi) => candidates.push([dist(center(lm), t.center), tid, pi]));
+
+      }
+
+      candidates.sort((a,b) => a[0]-b[0]);
+
+      const matchedTracks = new Set(), matchedPoses = new Set();
+
+      const active = [];
+
+      for (const [d, tid, pi] of candidates){
+
+        if (d > MAX_DIST || matchedTracks.has(tid) || matchedPoses.has(pi)) continue;
+
+        const t = this.tracks.get(tid);
+
+        t.center = center(posesLandmarks[pi]);
+
+        t.landmarks = posesLandmarks[pi];
+
+        t.missed = 0;
+
+        matchedTracks.add(tid); matchedPoses.add(pi);
+
+        active.push(t);
+
+      }
+
+      posesLandmarks.forEach((lm, pi) => {
+
+        if (matchedPoses.has(pi)) return;
+
+        const id = 'track_' + (this.nextId++);
+
+        const t = { id, center: center(lm), landmarks: lm, missed: 0,
+
+          leftRaised:false, rightRaised:false, candidateState:null, candidateFrames:0, initialized:false };
+
+        this.tracks.set(id, t);
+
+        active.push(t);
+
+      });
+
+      for (const [tid, t] of Array.from(this.tracks)){
+
+        if (matchedTracks.has(tid)) continue;
+
+        t.missed++;
+
+        if (t.missed > MAX_MISSED) this.tracks.delete(tid);
+
+      }
+
+      return active;
+
+    }
+
+  }
+
+
+
+  class Aggregator{
+
+    constructor(){ this.reset(); }
+
+    reset(){ this.windowStart = performance.now(); this.peopleSamples = []; this.participants = new Set(); this.armEvents = 0; }
+
+    ingest(peopleCount, newlyRaisedTrackIds){
+
+      this.peopleSamples.push(peopleCount);
+
+      newlyRaisedTrackIds.forEach(id => { this.participants.add(id); this.armEvents++; });
+
+      const elapsed = performance.now() - this.windowStart;
+
+      if (elapsed < WINDOW_MS) return { remainingMs: WINDOW_MS - elapsed, report: null };
+
+      const avg = this.peopleSamples.length ? this.peopleSamples.reduce((a,b)=>a+b,0) / this.peopleSamples.length : 0;
+
+      const report = {
+
+        people_average: Math.round(avg * 100) / 100,
+
+        people_max: this.peopleSamples.length ? Math.max(...this.peopleSamples) : 0,
+
+        participating_people: this.participants.size,
+
+        arm_raise_events: this.armEvents,
+
+        participation_ratio: avg > 0 ? Math.round((this.participants.size / avg) * 1000) / 1000 : 0,
+
+      };
+
+      this.reset();
+
+      return { remainingMs: WINDOW_MS, report };
+
+    }
+
+  }
+
+
+
+  // ---------- DOM wiring ----------
+
+  const btn = document.getElementById('liveToggle');
+
+  const video = document.getElementById('liveVideo');
+
+  const canvas = document.getElementById('liveCanvas');
+
+  const overlayMsg = document.getElementById('liveOverlayMsg');
+
+  const modelState = document.getElementById('liveModelState');
+
+  const mPeople = document.getElementById('mPeople');
+
+  const mArms = document.getElementById('mArms');
+
+  const mRatio = document.getElementById('mRatio');
+
+  const mWindow = document.getElementById('mWindow');
+
+  const badgesEl = document.getElementById('liveBadges');
+
+  const consoleEl = document.getElementById('liveConsole');
+
+
+
+  let ctx = canvas.getContext('2d');
+
+  let stream = null, poseLandmarker = null, running = false, rafId = null;
+
+  const tracker = new Tracker();
+
+  const aggregator = new Aggregator();
+
+
+
+  function logLine(text){
+
+    const div = document.createElement('div');
+
+    div.className = 'live-console-line';
+
+    div.textContent = text;
+
+    consoleEl.appendChild(div);
+
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+
+    while (consoleEl.children.length > 12) consoleEl.removeChild(consoleEl.firstChild);
+
+  }
+
+
+
+  async function ensureModel(){
+
+    if (poseLandmarker) return poseLandmarker;
+
+    modelState.textContent = 'baixando modelo…';
+
+    const { PoseLandmarker, FilesetResolver } = await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14');
+
+    const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
+
+    poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
+
+      baseOptions: {
+
+        modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',
+
+      },
+
+      runningMode: 'VIDEO',
+
+      numPoses: 4,
+
+      minPoseDetectionConfidence: 0.5,
+
+      minPosePresenceConfidence: 0.5,
+
+      minTrackingConfidence: 0.5,
+
+    });
+
+    modelState.textContent = 'modelo pronto';
+
+    return poseLandmarker;
+
+  }
+
+
+
+  function drawFrame(tracks){
+
+    const w = canvas.width, h = canvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    for (const t of tracks){
+
+      const pts = t.landmarks.map(p => [p.x * w, p.y * h]);
+
+      ctx.strokeStyle = '#FFB454'; ctx.lineWidth = 2;
+
+      for (const [a,b] of CONNECTIONS){
+
+        if (!pts[a] || !pts[b]) continue;
+
+        ctx.beginPath(); ctx.moveTo(pts[a][0], pts[a][1]); ctx.lineTo(pts[b][0], pts[b][1]); ctx.stroke();
+
+      }
+
+      ctx.fillStyle = '#8CFF7A';
+
+      for (const [x,y] of pts){ ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2); ctx.fill(); }
+
+    }
+
+  }
+
+
+
+  function analyzeTrack(t){
+
+    const evaluated = evaluateArms(t.landmarks);
+
+    if (!evaluated) return { newlyRaised: false };
+
+    const candidate = [
+
+      evaluated.leftConfident ? evaluated.leftRaised : t.leftRaised,
+
+      evaluated.rightConfident ? evaluated.rightRaised : t.rightRaised,
+
+    ];
+
+    const same = t.candidateState && t.candidateState[0] === candidate[0] && t.candidateState[1] === candidate[1];
+
+    if (same) t.candidateFrames++; else { t.candidateState = candidate; t.candidateFrames = 1; }
+
+    if (t.candidateFrames < REQUIRED_FRAMES) return { newlyRaised: false };
+
+
+
+    const previous = [t.leftRaised, t.rightRaised];
+
+    t.leftRaised = candidate[0]; t.rightRaised = candidate[1];
+
+    t.initialized = true;
+
+    const newlyRaised = (!previous[0] && candidate[0]) || (!previous[1] && candidate[1]);
+
+    return { newlyRaised };
+
+  }
+
+
+
+  function tick(){
+
+    if (!running) return;
+
+    const now = performance.now();
+
+    const result = poseLandmarker.detectForVideo(video, now);
+
+    const posesLandmarks = result.landmarks || [];
+
+    const tracks = tracker.update(posesLandmarks);
+
+
+
+    let newlyRaisedIds = [];
+
+    let armsUp = 0;
+
+    for (const t of tracks){
+
+      const { newlyRaised } = analyzeTrack(t);
+
+      if (newlyRaised) newlyRaisedIds.push(t.id);
+
+      if (t.leftRaised) armsUp++;
+
+      if (t.rightRaised) armsUp++;
+
+    }
+
+
+
+    drawFrame(tracks);
+
+
+
+    mPeople.textContent = tracks.length;
+
+    mArms.textContent = armsUp;
+
+    badgesEl.innerHTML = '';
+
+    tracks.forEach(t => {
+
+      const span = document.createElement('span');
+
+      const on = t.leftRaised || t.rightRaised;
+
+      span.className = 'badge' + (on ? ' on' : '');
+
+      span.textContent = `${t.id}: ${t.leftRaised ? 'ESQ↑' : 'esq↓'} ${t.rightRaised ? 'DIR↑' : 'dir↓'}`;
+
+      badgesEl.appendChild(span);
+
+    });
+
+
+
+    const { remainingMs, report } = aggregator.ingest(tracks.length, newlyRaisedIds);
+
+    mWindow.textContent = Math.max(0, Math.round(remainingMs / 1000)) + 's';
+
+    if (report){
+
+      mRatio.textContent = report.participation_ratio;
+
+      logLine('{ people_avg: ' + report.people_average + ', participating: ' + report.participating_people +
+
+        ', ratio: ' + report.participation_ratio + ' }');
+
+    }
+
+
+
+    rafId = requestAnimationFrame(tick);
+
+  }
+
+
+
+  async function start(){
+
+    btn.textContent = 'Ligando câmera…';
+
+    btn.disabled = true;
+
+    try{
+
+      stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+
+      video.srcObject = stream;
+
+      await video.play();
+
+      await new Promise(r => { if (video.readyState >= 2) r(); else video.onloadedmetadata = r; });
+
+      canvas.width = video.videoWidth || 640;
+
+      canvas.height = video.videoHeight || 480;
+
+    } catch (err){
+
+      overlayMsg.textContent = 'Não foi possível acessar a câmera (' + err.message + '). Verifique as permissões do navegador.';
+
+      overlayMsg.style.display = 'flex';
+
+      btn.textContent = 'Ligar câmera';
+
+      btn.disabled = false;
+
+      return;
+
+    }
+
+    try{
+
+      await ensureModel();
+
+    } catch (err){
+
+      overlayMsg.textContent = 'Câmera ligada, mas não deu para baixar o modelo do MediaPipe (é preciso internet liberada para cdn.jsdelivr.net e storage.googleapis.com). Detalhe: ' + err.message;
+
+      overlayMsg.style.display = 'flex';
+
+      modelState.textContent = 'modelo indisponível';
+
+      btn.textContent = 'Ligar câmera';
+
+      btn.disabled = false;
+
+      stream.getTracks().forEach(tr => tr.stop());
+
+      stream = null;
+
+      return;
+
+    }
+
+    overlayMsg.style.display = 'none';
+
+    running = true;
+
+    btn.textContent = 'Desligar câmera';
+
+    btn.classList.add('stop');
+
+    btn.disabled = false;
+
+    logLine('// câmera ligada — detectando poses localmente');
+
+    tick();
+
+  }
+
+
+
+  function stop(){
+
+    running = false;
+
+    if (rafId) cancelAnimationFrame(rafId);
+
+    if (stream) stream.getTracks().forEach(tr => tr.stop());
+
+    stream = null;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    overlayMsg.textContent = 'Clique em "Ligar câmera" para começar';
+
+    overlayMsg.style.display = 'flex';
+
+    btn.textContent = 'Ligar câmera';
+
+    btn.classList.remove('stop');
+
+    badgesEl.innerHTML = '';
+
+    mPeople.textContent = '0'; mArms.textContent = '0'; mRatio.textContent = '–'; mWindow.textContent = '10s';
+
+  }
+
+
+
+  btn.addEventListener('click', () => { running ? stop() : start(); });
 </script>
 </body></html>

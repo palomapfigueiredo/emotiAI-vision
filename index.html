@@ -67,6 +67,16 @@ html[data-theme="light"] .theme-toggle{background:#fff;color:#20212a}
 @media(min-width:900px){.live-panel{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}}
 @media(max-width:640px){.live-panel{padding:14px}.live-video-wrap{min-height:190px}.metric-value{font-size:1.25rem}}
 
+
+.questionnaire{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:24px;align-items:center;margin-top:26px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.questionnaire h3{margin:0 0 8px;color:var(--text)}
+.questionnaire p{color:var(--muted);margin:8px 0 16px}
+.questionnaire .primary-btn{display:inline-block;text-decoration:none}
+.questionnaire-qr{width:140px;max-width:100%;height:auto;padding:8px;background:#fff;border-radius:10px;justify-self:center}
+.questionnaire-qr-caption{text-align:center;font-size:.75rem;color:var(--muted);margin-top:6px}
+html[data-theme="light"] .questionnaire p{color:#424452}
+@media(max-width:520px){.questionnaire{grid-template-columns:1fr;text-align:center}.questionnaire-qr{width:150px}}
+
 </style>
 </head>
 <body id="topo">
@@ -315,6 +325,14 @@ Códigos como <code>track_1</code> e <code>track_2</code> ajudam a acompanhar mo
 
 
 <p>Este guia foi elaborado a partir da descrição e dos trechos de código fornecidos para o EmotiAI Vision, projeto de Ciência da Computação da UNIP Limeira.</p>
+<section aria-labelledby="questionario-titulo" class="questionnaire">
+<div>
+<h3 id="questionario-titulo">Vamos testar o que você aprendeu?</h3>
+<p>Responda a um questionário rápido sobre o EmotiAI Vision e ajude a avaliar a clareza do tutorial.</p>
+<a class="primary-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScOfixrVxQPMYNjgBPqpvtexdq4K1ceA0YKCY2bz2FtdlNn5g/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">Responder ao questionário ↗</a>
+</div>
+<div><a href="https://docs.google.com/forms/d/e/1FAIpQLScOfixrVxQPMYNjgBPqpvtexdq4K1ceA0YKCY2bz2FtdlNn5g/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" aria-label="Abrir questionário pelo QR Code"><img class="questionnaire-qr" alt="QR Code para abrir o questionário do EmotiAI Vision" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWUAAAFlAQAAAAAb/sQWAAAEEElEQVR4nO1bQa7qOBCsJhk5O3MDcxNzs5ibOTdJbmAWIyWSSc2infAWBP1Z/CeQXBsglFCrZbu6q40Qf47l9D/IQGVXdmX/EnsREZEWmK6giFwGOQGYrhDpANwoIiLy9yP5SjbI2ZJcGyYXe8mGJIVMQA8YMvZrQ5KBnD8n7g9jTyIA7IgbWwAAW1jG29rczwCAReT6K5F8OXu69uR8v+AGLGd4nmAScPv9SL6J3T7f3j3Bf/51CcCjg/gILN2vRfKt7Oc5OMNFSDapPByBFYZ6RtZz8BjkDABoZjv6sL582ZmfE/fnsMEnRs+ST33p0ZSHBTWDr9nLGUOQdjm7eDsBlgwinR29cOmAIZwe3ZP9NyP5SjZIJsfADMAHyYBj0JNvg3C2o6/n4CF7OWOgtCa5CJrZDldIXuQyBEqHSWSFmXz8hUi+kg2SHAHJANCvUC3OJgE9s0lu1+m6Bl+DnOFiD5gET8mGI7A2qiSFkmGrkrxhmwQv5GzHQWjm+8VTlg4ughl29Dw1TNqafFTcn8Ne3DgEERFPro8OwA3NvP/UIOuju4vw70fyleytotYjL4hu2BUmOYYVgIu9aNtSd/FrlFJai+cg2ST4wLylDvBc1eSqGXwNkgmeUgSlmQEfdoE2pKqMq2vwHdvdwqM1CV4km+RuAQ85Y2+IJS/nqXrUb9leNEukiBuuPQ2nC3oxd5FeVm31fiWSb2UPQaSzjFpKezk9xI2DrA+bXIS0AIaqxW/Y01Ul2QuwnLELtGTYcftU68EDFNHQzq1f8bMnEU3k2swlkZ8T9+ewNzuanFEsGm2B9+980MavZvAAJUsA7Og3IwuAev6AiyifagZfg2QCyoCkZzbknjqttsPazLbOSQ5BkowAtAtRP4vZcEQZtVMFpfYkb9m9etSyNnc3AtLi7iPw6DBdwdZMPlYtPgBL79vMlnHTFcnYH+oarM7CIVSEyWxIBjTFb4UdfRCSjL2QyVVn4QjU9KyAHfeH8ixxgF6rw6rFh+zFDb0I57uPZVwCAHcfe7awoxc8utoXH2Nbg81sR/Tr9thw3CqdXuW67uIDaEVN2cZyTI7EU1cYNYO1HjxCSc820dxuHikyLKP2zDWDRyg9ydb7ZhRlTmrvJxd7NEy1qzuE7tTNjSneTMGqRQ3UYa0ZPGKXUbtWM/uGtYy9ZDNdnhfkPizuz2GXu/xm8tyuabHF/aJ+q4tgizovfsvWCfFynq5AM2O6QjLsIEHMblWTddJ0gO3Cb8METwBWnRrL2P+g1WnnIfYMznZUi8aRosbgpjIAUN2tI/xYg47UGTugS1HU+tfLH7WaOcDP/zQx6AWPrZ1bmxmq03UXH+PnXf5y51IvzJQOxZX2pPbFB5D6/+LKruwvZ/8HnqakEZB6g88AAAAASUVORK5CYII=" /></a><div class="questionnaire-qr-caption">Aponte a câmera do celular</div></div>
+</section>
 <div class="footer">Guia educativo do projeto <strong>EmotiAI Vision</strong> — Ciência da Computação, UNIP Limeira.<br/>O sistema estima movimentos visíveis; não identifica pessoas nem mede sentimentos, atenção ou aprendizado.</div>
 </article>
 </main>

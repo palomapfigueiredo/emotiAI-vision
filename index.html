@@ -1,964 +1,1992 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="pt-BR">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="#101014" name="theme-color"/>
-<meta content="Guia simples e interativo para entender como funciona o EmotiAI Vision." name="description"/>
-<title>EmotiAI Vision — Guia explicado de forma simples</title>
-<style>
-:root{--bg:#0d0d12;--surface:#15151d;--surface2:#1b1b25;--text:#f3f2f7;--muted:#b6b4c4;--accent:#ff9f43;--accent2:#ffd0a0;--line:#30303d;--code:#0a0a0f;--good:#9fe3bd;--radius:18px;}
-*{box-sizing:border-box} html{scroll-behavior:smooth;scroll-padding-top:28px} body{margin:0;background:radial-gradient(ellipse at top left,#241b24 0,transparent 36%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.72} a{color:var(--accent2)} .progress{position:fixed;z-index:20;inset:0 0 auto;height:4px;background:#292832} .progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .12s}
-.layout{display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1440px;margin:auto;min-height:100vh} aside{position:sticky;top:0;height:100vh;overflow:auto;padding:28px 18px 28px 24px;border-right:1px solid var(--line);background:rgba(13,13,18,.88);backdrop-filter:blur(14px)} .brand{font-weight:800;font-size:1.15rem;letter-spacing:-.03em;color:#fff} .brand span{color:var(--accent)} .brand-sub{font-size:.83rem;color:var(--muted);margin:4px 0 22px} .nav-label{margin:20px 10px 8px;color:#8f8d9c;font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;font-weight:800} nav{display:flex;flex-direction:column;gap:3px} nav a{color:#c7c5d1;text-decoration:none;font-size:.83rem;line-height:1.4;padding:9px 10px;border-radius:10px;transition:.2s} nav a:hover,nav a.active{background:#28222a;color:var(--accent2)} main{width:100%;max-width:980px;padding:60px clamp(22px,5vw,76px) 80px;margin:0 auto} .hero{padding:34px 0 30px;border-bottom:1px solid var(--line);margin-bottom:30px} .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:.75rem;text-transform:uppercase;letter-spacing:.14em;font-weight:800} .eyebrow:before{content:"";width:20px;height:2px;background:currentColor} .hero h1{font-size:clamp(2.2rem,5vw,4rem);letter-spacing:-.055em;line-height:1.08;margin:16px 0} .hero p{font-size:1.1rem;color:var(--muted);max-width:740px} .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px} .pill{border:1px solid #3b3540;border-radius:999px;padding:7px 12px;color:#e7d9ca;font-size:.8rem;background:#1a171d} article>h2{font-size:clamp(1.45rem,3vw,2rem);letter-spacing:-.035em;line-height:1.2;margin:64px 0 18px;padding-top:18px} article>h1{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.18;letter-spacing:-.04em;margin:28px 0 18px} h3{font-size:1.18rem;line-height:1.3;margin:28px 0 8px;color:#fff} p{margin:12px 0;color:#d5d3de} strong{color:#fff} blockquote{margin:24px 0;padding:18px 22px;border-left:3px solid var(--accent);background:#1c1920;border-radius:0 14px 14px 0;color:#e8dfe8} hr{border:0;border-top:1px solid var(--line);margin:38px 0} ul,ol{padding-left:1.4rem;color:#d5d3de} li{margin:7px 0;padding-left:3px} li::marker{color:var(--accent)} code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.88em;color:#ffd0a0;background:#29212b;border:1px solid #3a303c;padding:.13em .36em;border-radius:6px} pre{overflow:auto;padding:20px;background:var(--code);border:1px solid var(--line);border-radius:14px;line-height:1.6} pre code{background:none;border:0;padding:0;color:#e9e7ef;font-size:.85rem} table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;border-radius:12px;margin:18px 0} th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);min-width:130px} th{background:#27212a;color:var(--accent2);font-size:.86rem} td{background:#15151d;color:#d7d5df;font-size:.9rem} article>p:first-of-type{max-width:820px} .camera-demo{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:22px;margin:26px 0;background:linear-gradient(135deg,#211c25,#15151d);border:1px solid #3a303c;border-radius:var(--radius)} .camera-demo h3{margin-top:9px;font-size:1.45rem} .camera-demo p{font-size:.9rem;color:var(--muted)} .primary-btn{border:0;border-radius:10px;padding:11px 16px;background:var(--accent);color:#24170c;font-weight:800;cursor:pointer;font-size:.92rem} .primary-btn:hover{filter:brightness(1.08);transform:translateY(-1px)} .camera-status{font-size:.8rem!important} .video-frame{position:relative;min-height:220px;background:#09090c;border:1px solid #39333d;border-radius:13px;overflow:hidden;display:grid;place-items:center;align-self:stretch} video{width:100%;height:100%;min-height:220px;object-fit:cover;display:none} .video-placeholder{text-align:center;color:#777482;padding:18px} .video-placeholder span{font-size:2.6rem;color:#a5a0af} .video-placeholder p{font-size:.8rem} .callout{padding:15px 18px;border:1px solid #4b3c2d;background:#211b17;border-radius:12px;margin:18px 0} .callout strong{color:var(--accent2)} .footer{border-top:1px solid var(--line);padding-top:25px;margin-top:60px;color:#9d9aa9;font-size:.85rem} .backtop{position:fixed;right:22px;bottom:22px;border:1px solid #50424a;background:#211c24;color:var(--accent2);border-radius:50px;padding:10px 14px;text-decoration:none;font-size:.85rem;box-shadow:0 8px 24px #0005} .menu-toggle{display:none} @media(max-width:900px){.layout{display:block} aside{position:sticky;z-index:15;top:4px;height:auto;padding:12px 18px;border-right:0;border-bottom:1px solid var(--line)} .brand-sub{margin:0} .menu-toggle{display:block;float:right;background:transparent;color:var(--text);border:1px solid var(--line);padding:7px 10px;border-radius:9px} nav{display:none;max-height:55vh;overflow:auto;margin-top:12px} nav.open{display:flex} .nav-label{display:none} main{padding-top:28px} .hero{padding-top:24px}} @media(max-width:600px){.camera-demo{grid-template-columns:1fr;padding:16px} main{padding-left:18px;padding-right:18px} article>h2{margin-top:48px} .backtop{right:12px;bottom:12px}}
-
-/* Tema claro: cores de leitura com contraste, mantendo o laranja do projeto */
-html[data-theme="light"]{color-scheme:light;--bg:#f5f6fa;--surface:#ffffff;--surface2:#eef0f5;--text:#20212a;--muted:#626575;--accent:#b85c00;--accent2:#914700;--line:#d9dce5;--code:#f0f1f6;--good:#176b43}
-html[data-theme="light"] body{background:radial-gradient(ellipse at top left,#fff0df 0,transparent 38%),var(--bg);color:var(--text)}
-html[data-theme="light"] aside{background:rgba(255,255,255,.92)}
-html[data-theme="light"] .brand{color:#20212a}
-html[data-theme="light"] nav a{color:#454755}
-html[data-theme="light"] nav a:hover,html[data-theme="light"] nav a.active{background:#fff0df;color:#914700}
-html[data-theme="light"] .hero p,html[data-theme="light"] p,html[data-theme="light"] ul,html[data-theme="light"] ol{color:#424452}
-html[data-theme="light"] h3,html[data-theme="light"] strong{color:#20212a}
-html[data-theme="light"] .pill{border-color:#e4d1bd;color:#75400f;background:#fff8f0}
-html[data-theme="light"] blockquote{background:#fff3e7;color:#424452}
-html[data-theme="light"] code{color:#874400;background:#fff0df;border-color:#efd7bd}
-html[data-theme="light"] pre{background:#f0f1f6}
-html[data-theme="light"] pre code{color:#292a33;background:transparent}
-html[data-theme="light"] th{background:#fff0df;color:#814000}
-html[data-theme="light"] td{background:#fff;color:#424452}
-html[data-theme="light"] .camera-demo{background:linear-gradient(135deg,#fff4e8,#fff);border-color:#ead7c5}
-html[data-theme="light"] .camera-demo p{color:#626575}
-html[data-theme="light"] .callout{border-color:#e8c9a7;background:#fff6ec}
-html[data-theme="light"] .callout strong{color:#814000}
-html[data-theme="light"] .backtop{border-color:#e0c8b1;background:#fff8f0;color:#814000}
-html[data-theme="light"] .progress{background:#e5e5ec}
-html[data-theme="light"] .menu-toggle{color:#20212a}
-.theme-toggle{display:inline-flex;align-items:center;gap:8px;margin:16px 0 4px;padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:var(--surface2);color:var(--text);font:inherit;font-size:.82rem;font-weight:750;cursor:pointer;transition:background .2s,border-color .2s}
-.theme-toggle:hover{border-color:var(--accent)}
-.theme-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-html[data-theme="light"] .theme-toggle{background:#fff;color:#20212a}
-@media(max-width:900px){.theme-toggle{margin:10px 0 0}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-
-/* Demonstração real de pose com MediaPipe */
-.live-panel{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:22px}
-.live-body{display:grid;grid-template-columns:1fr 270px}
-.live-media{min-width:0}
-.live-video-wrap{position:relative;aspect-ratio:4/3;min-height:250px;background:#09090d;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.live-video,.live-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
-.live-video{display:block;min-height:0}
-.live-canvas{z-index:2}
-.live-overlay-msg{position:absolute;z-index:3;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff;background:rgba(9,9,13,.62)}
-.live-overlay-msg[hidden]{display:none}
-.live-console{margin-top:12px;padding:12px 14px;background:var(--code);border:1px solid var(--line);border-radius:12px;max-height:150px;overflow:auto;font: .78rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--text)}
-.live-console-line{margin:3px 0}
-.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
-.metric-card{padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid var(--line)}
-.metric-label{display:block;font-size:.75rem;color:var(--muted);line-height:1.35}
-.metric-value{display:block;font-size:1.45rem;line-height:1.4;color:var(--text)}
-.badge-row{display:flex;flex-direction:column;gap:7px}
-.badge-row .badge{padding:7px 10px;border-radius:9px;background:var(--surface2);font-size:.8rem;color:var(--muted)}
-.badge-row .badge.on{background:#176b43;color:#fff}
-.live-btn.stop{background:#d94f3d;color:white}
-.live-btn:disabled{opacity:.65;cursor:wait}
-#liveModelState{font-weight:700}
-@media(min-width:900px){.live-panel{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}}
-@media(max-width:640px){.live-panel{padding:14px}.live-video-wrap{min-height:190px}.metric-value{font-size:1.25rem}}
-
-
-.questionnaire{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:24px;align-items:center;margin-top:26px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
-.questionnaire h3{margin:0 0 8px;color:var(--text)}
-.questionnaire p{color:var(--muted);margin:8px 0 16px}
-.questionnaire .primary-btn{display:inline-block;text-decoration:none}
-.questionnaire-qr{width:140px;max-width:100%;height:auto;padding:8px;background:#fff;border-radius:10px;justify-self:center}
-.questionnaire-qr-caption{text-align:center;font-size:.75rem;color:var(--muted);margin-top:6px}
-html[data-theme="light"] .questionnaire p{color:#424452}
-@media(max-width:520px){.questionnaire{grid-template-columns:1fr;text-align:center}.questionnaire-qr{width:150px}}
-
-</style>
-</head>
-<body id="topo">
-<div aria-hidden="true" class="progress"><span id="progressBar"></span></div>
-<div class="layout">
-<aside>
-<button aria-controls="siteNav" aria-expanded="false" class="menu-toggle" id="menuToggle">Menu ☰</button>
-<div class="brand">EmotiAI <span>Vision</span></div><div class="brand-sub">Um guia passo a passo, sem complicação</div>
-<button aria-label="Ativar modo claro" aria-pressed="false" class="theme-toggle" id="themeToggle" type="button">☀️ <span id="themeToggleLabel">Ativar modo claro</span></button>
-<div class="nav-label">Explore o guia</div><nav id="siteNav"><a href="#início">Início</a>
-<a href="#experimente-com-sua-câmera">Experimente com sua câmera</a>
-<a href="#como-o-sistema-funciona">Como o sistema funciona</a>
-<a href="#passo-1-captura-de-vídeo">Passo 1 — Captura de vídeo</a>
-<a href="#passo-2-detecção-de-pose">Passo 2 — Detecção de pose</a>
-<a href="#passo-3-rastreamento">Passo 3 — Rastreamento</a>
-<a href="#passo-4-análise-de-postura">Passo 4 — Análise de postura</a>
-<a href="#passo-5-eventos">Passo 5 — Eventos</a>
-<a href="#passo-6-métricas-agregadas">Passo 6 — Métricas agregadas</a>
-<a href="#passo-7-visualização-de-depuração">Passo 7 — Visualização de depuração</a>
-<a href="#passo-8-o-loop-principal">Passo 8 — O loop principal</a>
-<a href="#configurações-do-projeto">Configurações do projeto</a>
-<a href="#como-executar-o-projeto">Como executar o projeto</a>
-<a href="#para-lembrar">Para lembrar</a></nav>
-</aside>
-<main>
-<header class="hero">
-<div class="eyebrow">Aprenda explorando</div>
-<h1>Entenda como o EmotiAI Vision observa movimentos</h1>
-<p>Veja como o sistema detecta movimentos e organiza os resultados.</p>
-<div class="hero-pills"><span class="pill">✦ Linguagem simples</span><span class="pill">↗ Exemplos do dia a dia</span><span class="pill">⌘ Código explicado</span></div>
-</header>
-<article>
-
-<hr/>
-<h2 id="início">Início</h2>
-<h1 id="como-o-emotiai-vision-observa-movimentos-em-uma-sala">Como o EmotiAI Vision observa movimentos em uma sala?</h1>
-<p>O EmotiAI Vision analisa imagens da câmera para identificar movimentos do corpo, como levantar a mão.</p>
-<p>O sistema captura a imagem, identifica pontos do corpo, acompanha as pessoas e verifica se os braços estão levantados. Depois, reúne os resultados em métricas.</p>
-<p><strong>Importante:</strong> o sistema identifica movimentos visíveis. Não consegue determinar pensamentos, emoções, atenção ou aprendizado.</p>
-
-<p><strong>Não tenta descobrir quem é a pessoa</strong><br/>
-Analisa pontos do corpo, como ombros, cotovelos e punhos, sem precisar reconhecer o rosto.</p>
-<p><strong>Não guarda vídeos ou fotos no computador</strong><br/>
-As imagens são analisadas durante a execução, sem serem salvas como vídeos ou fotos; o programa reúne informações numéricas.</p>
-<p><strong>Os códigos de acompanhamento são temporários</strong><br/>
-Códigos como <code>track_1</code> e <code>track_2</code> ajudam a acompanhar movimentos durante a execução. Não identificam pessoas e são temporários.</p>
-<hr/>
-<h2 id="experimente-com-sua-câmera">Experimente com sua câmera</h2>
-<h1 id="vamos-testar">Vamos testar?</h1>
-<p>Permita o acesso à câmera, fique de frente para ela e levante um braço para testar a detecção.</p>
-<div aria-label="Demonstração ao vivo de detecção de pose" class="camera-demo live-panel">
-<div class="camera-copy">
-<span class="eyebrow">Experiência interativa</span>
-<h3>Vamos testar os gestos?</h3>
-<p>Ative a câmera e levante um ou os dois braços para testar o modelo.</p>
-<button class="primary-btn live-btn" id="liveToggle" type="button">Ligar câmera</button>
-<p class="camera-status" id="liveModelState" role="status">Modelo ainda não carregado.</p>
-<p class="camera-status" id="liveOverlayHint">A câmera só será ativada quando você clicar no botão.</p>
-<div class="metric-grid">
-<div class="metric-card"><span class="metric-label">Pessoas detectadas</span><strong class="metric-value" id="mPeople">0</strong></div>
-<div class="metric-card"><span class="metric-label">Braços levantados</span><strong class="metric-value" id="mArms">0</strong></div>
-<div class="metric-card"><span class="metric-label">Participação</span><strong class="metric-value" id="mRatio">–</strong></div>
-<div class="metric-card"><span class="metric-label">Próximo resumo</span><strong class="metric-value" id="mWindow">10s</strong></div>
-</div>
-<h3>Detecções atuais</h3>
-<div class="badge-row" id="liveBadges"><span class="badge">Nenhuma pessoa detectada ainda.</span></div>
-</div>
-<div class="live-media">
-<div class="live-video-wrap">
-<video autoplay="" class="live-video" id="liveVideo" muted="" playsinline=""></video>
-<canvas class="live-canvas" id="liveCanvas"></canvas>
-<div class="live-overlay-msg" id="liveOverlayMsg">Clique em “Ligar câmera” para começar.</div>
-</div>
-<div aria-live="polite" class="live-console" id="liveConsole"><div class="live-console-line">Aguardando início da demonstração…</div></div>
-</div>
-</div>
-<p>Linhas laranjas e pontos verdes indicam as partes do corpo detectadas. O modelo é carregado pela internet e a análise ocorre no navegador.</p>
-<h3 id="o-que-significam-os-números">O que significam os números?</h3>
-<ul>
-<li><strong>Pessoas agora:</strong> quantas pessoas o sistema conseguiu detectar neste momento.</li>
-<li><strong>Braços levantados:</strong> quantas pessoas estão com um ou mais braços reconhecidos como levantados.</li>
-<li><strong>Participação (10 s):</strong> um resumo calculado para uma janela de 10 segundos, de acordo com as regras do projeto. Isso não mede interesse, aprendizado ou atenção.</li>
-<li><strong>Próxima janela em:</strong> quanto falta para o sistema preparar o próximo resumo.</li>
-</ul>
-<p>Se a detecção não funcionar, confira a conexão com a internet e a permissão de uso da câmera no navegador.</p>
-<hr/>
-<h2 id="como-o-sistema-funciona">Como o sistema funciona</h2>
-<h1 id="o-caminho-da-imagem-oito-etapas">O caminho da imagem: oito etapas</h1>
-
-<ol type="1">
-<li><strong>Captura:</strong> a câmera entrega uma imagem ao programa.</li>
-<li><strong>Detecção de pose:</strong> o sistema procura pontos do corpo, como ombros, cotovelos e punhos.</li>
-<li><strong>Rastreamento:</strong> o programa tenta descobrir quais pontos de uma imagem correspondem à mesma pessoa na imagem seguinte.</li>
-<li><strong>Análise de postura:</strong> o programa verifica se os pontos indicam que um braço está levantado.</li>
-<li><strong>Eventos:</strong> quando algo muda, como um braço subir ou descer, o sistema registra essa mudança.</li>
-<li><strong>Resumo das métricas:</strong> depois de um intervalo, o programa junta os registros e calcula números.</li>
-<li><strong>Visualização de depuração:</strong> durante os testes, o programa pode desenhar os pontos e as linhas sobre a imagem.</li>
-<li><strong>Loop principal:</strong> é a parte que organiza a ordem das tarefas e faz o processo se repetir.</li>
-</ol>
-
-<hr/>
-<h2 id="passo-1-captura-de-vídeo">Passo 1 — Captura de vídeo</h2>
-<h1 id="a-câmera-entrega-a-imagem">1. A câmera entrega a imagem</h1>
-<p><strong>Arquivo:</strong> <code>camera/capture.py</code></p>
-<p>A câmera captura imagens chamadas <em>frames</em>, que são analisadas em sequência.</p>
-<p>A classe <code>CameraCapture</code> acessa a câmera e configura resolução, frequência de análise e rotação.</p>
-<h2 id="passo-2-detecção-de-pose">Passo 2 — Detecção de pose</h2>
-<h1 id="o-sistema-procura-pontos-do-corpo">2. O sistema procura pontos do corpo</h1>
-<p><strong>Arquivo:</strong> <code>detection/pose_detector.py</code></p>
-<p>Agora que a imagem chegou, o sistema precisa encontrar partes do corpo. Para isso, o projeto usa o <strong>MediaPipe Pose Landmarker</strong>, uma ferramenta que estima pontos do corpo em uma imagem.</p>
-<p>Esses pontos são chamados de <em>landmarks</em>. Entre eles estão os ombros, os cotovelos, os punhos, os quadris e pontos das pernas. O modelo usado pelo projeto pode identificar até 33 pontos para cada pose detectada.</p>
-<h2 id="passo-3-rastreamento">Passo 3 — Rastreamento</h2>
-<h1 id="como-o-sistema-acompanha-a-mesma-pessoa">3. Como o sistema acompanha a mesma pessoa?</h1>
-<p><strong>Arquivo:</strong> <code>tracking/tracker.py</code></p>
-<p>Imagine que duas pessoas estejam na frente da câmera. Em uma imagem, o sistema encontra dois conjuntos de pontos. Na imagem seguinte, ele encontra os pontos novamente. Como pode tentar saber qual conjunto corresponde a cada pessoa?</p>
-<p>É para isso que serve o <strong>rastreamento</strong> (<em>tracking</em>). O programa compara a posição dos pontos entre imagens consecutivas. Neste projeto, ele usa principalmente a proximidade entre os centros dos ombros.</p>
-<h2 id="passo-4-análise-de-postura">Passo 4 — Análise de postura</h2>
-<h1 id="como-o-sistema-percebe-um-braço-levantado">4. Como o sistema percebe um braço levantado?</h1>
-<p><strong>Arquivos:</strong> <code>analysis/arm_detection.py</code> e <code>analysis/posture_detection.py</code></p>
-<p>O sistema já encontrou os pontos do corpo e está tentando acompanhá-los. Agora ele verifica uma pergunta específica: <strong>a posição dos pontos indica que um braço está levantado?</strong></p>
-<p>Para responder, o programa compara a altura de pontos como o punho, o ombro, o cotovelo e, quando está visível, o quadril.</p>
-<h2 id="passo-5-eventos">Passo 5 — Eventos</h2>
-<h1 id="como-o-sistema-registra-o-que-aconteceu">5. Como o sistema registra o que aconteceu?</h1>
-<p><strong>Arquivo:</strong> <code>events/event.py</code></p>
-<p>Quando algo importante muda, o programa cria um <strong>evento</strong>. Um evento é como uma anotação curta em um caderno: registra o que aconteceu e em que momento.</p>
-<p>Alguns exemplos de eventos que o projeto reconhece são:</p>
-<ul>
-<li>Uma pessoa foi detectada.</li>
-<li>Uma pessoa deixou de ser acompanhada.</li>
-<li>O braço esquerdo foi reconhecido como levantado.</li>
-<li>O braço direito foi reconhecido como levantado.</li>
-<li>Os dois braços foram reconhecidos como levantados.</li>
-</ul>
-<p>Cada evento pode guardar informações como o tipo de mudança, o identificador temporário da pessoa, o nível de confiança e o momento em que ocorreu.</p>
-<h2 id="passo-6-métricas-agregadas">Passo 6 — Métricas agregadas</h2>
-<h1 id="de-muitos-acontecimentos-para-um-resumo">6. De muitos acontecimentos para um resumo</h1>
-<p><strong>Arquivos:</strong> <code>analysis/aggregator.py</code> e <code>analysis/participation.py</code></p>
-<p>Até aqui, o sistema recebeu muitas imagens e pode ter identificado várias mudanças. Ler cada acontecimento separadamente seria trabalhoso. Por isso, o projeto reúne os resultados em intervalos de tempo.</p>
-<p>O tempo padrão de cada intervalo é <strong>10 segundos</strong>. Esse período é chamado de <em>janela de agregação</em>.</p>
-<h2 id="passo-7-visualização-de-depuração">Passo 7 — Visualização de depuração</h2>
-<h1 id="por-que-aparecem-linhas-e-pontos-sobre-o-corpo">7. Por que aparecem linhas e pontos sobre o corpo?</h1>
-<p><strong>Arquivo:</strong> <code>debug/renderer.py</code></p>
-<p>Durante o desenvolvimento, é útil ver o que o sistema está detectando. A parte chamada <code>DebugRenderer</code> desenha pontos e linhas sobre a imagem da câmera.</p>
-<p>As bolinhas indicam os pontos estimados do corpo, enquanto as linhas ligam esses pontos para formar uma espécie de esqueleto. Assim, quem está testando o projeto consegue observar se o sistema encontrou os ombros, os cotovelos e os punhos nas posições esperadas.</p>
-<h2 id="passo-8-o-loop-principal">Passo 8 — O loop principal</h2>
-<h1 id="como-tudo-funciona-junto">8. Como tudo funciona junto?</h1>
-<p><strong>Arquivo:</strong> <code>main.py</code></p>
-<p>Cada etapa tem uma tarefa, mas alguém precisa organizar a ordem em que elas acontecem. Esse é o trabalho do arquivo <code>main.py</code>, que funciona como o maestro de uma orquestra.</p>
-<p>Ele coordena o processo:</p>
-<ol type="1">
-<li>Recebe uma imagem da câmera.</li>
-<li>Envia a imagem para encontrar os pontos do corpo.</li>
-<li>Tenta acompanhar as pessoas entre as imagens.</li>
-<li>Analisa a posição dos braços.</li>
-<li>Registra as mudanças importantes.</li>
-<li>Atualiza e reúne as métricas.</li>
-<li>Mostra a visualização de depuração, se ela estiver ativada.</li>
-<li>Repete o processo enquanto o programa estiver funcionando.</li>
-</ol>
-<h2 id="configurações-do-projeto">Configurações do projeto</h2>
-<h1 id="o-que-é-possível-ajustar">O que é possível ajustar?</h1>
-<p><strong>Arquivo:</strong> <code>config/settings.py</code></p>
-
-<table>
-<colgroup>
-<col style="width: 30%"/>
-<col style="width: 40%"/>
-<col style="width: 30%"/>
-</colgroup>
-<thead>
-<tr class="header">
-<th>Configuração</th>
-<th style="text-align: right;">Valor padrão</th>
-<th>O que significa</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>frame_width / frame_height</code></td>
-<td style="text-align: right;">1280 × 720</td>
-<td>A largura e a altura solicitadas para a imagem da câmera.</td>
-</tr>
-<tr class="even">
-<td><code>rotation</code></td>
-<td style="text-align: right;">180°</td>
-<td>A rotação aplicada à imagem.</td>
-</tr>
-<tr class="odd">
-<td><code>max_poses</code></td>
-<td style="text-align: right;">10</td>
-<td>O número máximo de poses que o sistema tenta detectar em uma imagem.</td>
-</tr>
-<tr class="even">
-<td><code>min_landmark_confidence</code></td>
-<td style="text-align: right;">0,5</td>
-<td>O nível mínimo de confiança usado para considerar um ponto válido, conforme a implementação do projeto.</td>
-</tr>
-<tr class="odd">
-<td><code>target_processing_fps</code></td>
-<td style="text-align: right;">10</td>
-<td>A quantidade aproximada de imagens que o sistema pretende analisar por segundo.</td>
-</tr>
-<tr class="even">
-<td><code>required_consecutive_frames</code></td>
-<td style="text-align: right;">5</td>
-<td>Quantos frames seguidos são exigidos para confirmar uma mudança de postura.</td>
-</tr>
-<tr class="odd">
-<td><code>aggregation_window_seconds</code></td>
-<td style="text-align: right;">10 segundos</td>
-<td>A duração de cada intervalo usado para montar um resumo.</td>
-</tr>
-<tr class="even">
-<td><code>tracker_max_distance</code></td>
-<td style="text-align: right;">0,18</td>
-<td>A distância máxima permitida para relacionar uma pose nova a um acompanhamento existente.</td>
-</tr>
-<tr class="odd">
-<td><code>tracker_max_missed_frames</code></td>
-<td style="text-align: right;">8</td>
-<td>Quantos frames podem passar sem atualização antes de o acompanhamento ser considerado perdido.</td>
-</tr>
-</tbody>
-</table>
-<p>Os valores padrão são os definidos no guia do projeto. Dependendo da câmera, da iluminação e da posição das pessoas, pode ser necessário testar configurações diferentes.</p>
-<hr/>
-<h2 id="como-executar-o-projeto">Como executar o projeto</h2>
-<h1 id="vamos-colocar-o-emotiai-vision-para-funcionar">Vamos colocar o EmotiAI Vision para funcionar?</h1>
-
-<p>O guia do projeto lista estas dependências:</p>
-<ul>
-<li><code>mediapipe</code> — ajuda a estimar os pontos do corpo.</li>
-<li><code>opencv-python</code> — ajuda a acessar e trabalhar com imagens da câmera.</li>
-<li><code>numpy</code> — oferece ferramentas para trabalhar com dados numéricos.</li>
-</ul>
-<h3 id="comandos-de-execução">Comandos de execução</h3>
-<p>No terminal, entre na pasta do projeto e execute o programa usando o Python do ambiente virtual configurado:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="bu">cd</span> app/computacional-vision</span>
-<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="ex">./venv/bin/python</span> main.py</span></code></pre></div>
-
-<p>Se a janela de depuração estiver aberta, o guia do projeto indica que a tecla <strong>Q</strong> pode ser usada para encerrar essa janela.</p>
-<h3 id="o-que-acontece-quando-o-programa-termina">O que acontece quando o programa termina?</h3>
-
-<hr/>
-<h2 id="para-lembrar">Para lembrar</h2>
-
-
-<p>Este guia foi elaborado a partir da descrição e dos trechos de código fornecidos para o EmotiAI Vision, projeto de Ciência da Computação da UNIP Limeira.</p>
-<section aria-labelledby="questionario-titulo" class="questionnaire">
-<div>
-<h3 id="questionario-titulo">Vamos testar o que você aprendeu?</h3>
-<p>Responda a um questionário rápido sobre o EmotiAI Vision e ajude a avaliar a clareza do tutorial.</p>
-<a class="primary-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScOfixrVxQPMYNjgBPqpvtexdq4K1ceA0YKCY2bz2FtdlNn5g/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">Responder ao questionário ↗</a>
-</div>
-<div><a href="https://docs.google.com/forms/d/e/1FAIpQLScOfixrVxQPMYNjgBPqpvtexdq4K1ceA0YKCY2bz2FtdlNn5g/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" aria-label="Abrir questionário pelo QR Code"><img class="questionnaire-qr" alt="QR Code para abrir o questionário do EmotiAI Vision" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWUAAAFlAQAAAAAb/sQWAAAEEElEQVR4nO1bQa7qOBCsJhk5O3MDcxNzs5ibOTdJbmAWIyWSSc2infAWBP1Z/CeQXBsglFCrZbu6q40Qf47l9D/IQGVXdmX/EnsREZEWmK6giFwGOQGYrhDpANwoIiLy9yP5SjbI2ZJcGyYXe8mGJIVMQA8YMvZrQ5KBnD8n7g9jTyIA7IgbWwAAW1jG29rczwCAReT6K5F8OXu69uR8v+AGLGd4nmAScPv9SL6J3T7f3j3Bf/51CcCjg/gILN2vRfKt7Oc5OMNFSDapPByBFYZ6RtZz8BjkDABoZjv6sL582ZmfE/fnsMEnRs+ST33p0ZSHBTWDr9nLGUOQdjm7eDsBlgwinR29cOmAIZwe3ZP9NyP5SjZIJsfADMAHyYBj0JNvg3C2o6/n4CF7OWOgtCa5CJrZDldIXuQyBEqHSWSFmXz8hUi+kg2SHAHJANCvUC3OJgE9s0lu1+m6Bl+DnOFiD5gET8mGI7A2qiSFkmGrkrxhmwQv5GzHQWjm+8VTlg4ughl29Dw1TNqafFTcn8Ne3DgEERFPro8OwA3NvP/UIOuju4vw70fyleytotYjL4hu2BUmOYYVgIu9aNtSd/FrlFJai+cg2ST4wLylDvBc1eSqGXwNkgmeUgSlmQEfdoE2pKqMq2vwHdvdwqM1CV4km+RuAQ85Y2+IJS/nqXrUb9leNEukiBuuPQ2nC3oxd5FeVm31fiWSb2UPQaSzjFpKezk9xI2DrA+bXIS0AIaqxW/Y01Ul2QuwnLELtGTYcftU68EDFNHQzq1f8bMnEU3k2swlkZ8T9+ewNzuanFEsGm2B9+980MavZvAAJUsA7Og3IwuAev6AiyifagZfg2QCyoCkZzbknjqttsPazLbOSQ5BkowAtAtRP4vZcEQZtVMFpfYkb9m9etSyNnc3AtLi7iPw6DBdwdZMPlYtPgBL79vMlnHTFcnYH+oarM7CIVSEyWxIBjTFb4UdfRCSjL2QyVVn4QjU9KyAHfeH8ixxgF6rw6rFh+zFDb0I57uPZVwCAHcfe7awoxc8utoXH2Nbg81sR/Tr9thw3CqdXuW67uIDaEVN2cZyTI7EU1cYNYO1HjxCSc820dxuHikyLKP2zDWDRyg9ydb7ZhRlTmrvJxd7NEy1qzuE7tTNjSneTMGqRQ3UYa0ZPGKXUbtWM/uGtYy9ZDNdnhfkPizuz2GXu/xm8tyuabHF/aJ+q4tgizovfsvWCfFynq5AM2O6QjLsIEHMblWTddJ0gO3Cb8METwBWnRrL2P+g1WnnIfYMznZUi8aRosbgpjIAUN2tI/xYg47UGTugS1HU+tfLH7WaOcDP/zQx6AWPrZ1bmxmq03UXH+PnXf5y51IvzJQOxZX2pPbFB5D6/+LKruwvZ/8HnqakEZB6g88AAAAASUVORK5CYII=" /></a><div class="questionnaire-qr-caption">Aponte a câmera do celular</div></div>
-</section>
-<div class="footer">Guia educativo do projeto <strong>EmotiAI Vision</strong> — Ciência da Computação, UNIP Limeira.<br/>O sistema estima movimentos visíveis; não identifica pessoas nem mede sentimentos, atenção ou aprendizado.</div>
-</article>
-</main>
-</div>
-<a aria-label="Voltar ao topo" class="backtop" href="#topo" id="backTop">↑ Início</a>
-<script>
-(() => {
-  const bar = document.getElementById('progressBar');
-  const nav = document.getElementById('siteNav');
-  const menuToggle = document.getElementById('menuToggle');
-  const themeToggle = document.getElementById('themeToggle');
-  const themeToggleLabel = document.getElementById('themeToggleLabel');
-  const applyTheme = (theme) => {
-    document.documentElement.dataset.theme = theme;
-    const isLight = theme === 'light';
-    themeToggle.setAttribute('aria-pressed', String(isLight));
-    themeToggle.setAttribute('aria-label', isLight ? 'Ativar modo escuro' : 'Ativar modo claro');
-    themeToggleLabel.textContent = isLight ? 'Ativar modo escuro' : 'Ativar modo claro';
-    themeToggle.firstChild.textContent = isLight ? '🌙 ' : '☀️ ';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isLight ? '#f5f6fa' : '#101014');
-  };
-  let savedTheme = 'dark';
-  try { savedTheme = localStorage.getItem('emotiai-theme') || 'dark'; } catch (e) {}
-  applyTheme(savedTheme === 'light' ? 'light' : 'dark');
-  themeToggle.addEventListener('click', () => {
-    const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    applyTheme(nextTheme);
-    try { localStorage.setItem('emotiai-theme', nextTheme); } catch (e) {}
-  });
-  const updateProgress = () => {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
-  };
-  window.addEventListener('scroll', updateProgress, {passive:true}); updateProgress();
-  menuToggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', String(open));
-  });
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
-  const headings = [...document.querySelectorAll('article h2[id]')];
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        nav.querySelectorAll('a').forEach(a => a.classList.toggle('active', a.hash === '#' + entry.target.id));
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="#101014" name="theme-color" />
+    <meta
+      content="Guia simples e interativo para entender como funciona o EmotiAI Vision."
+      name="description"
+    />
+    <title>EmotiAI Vision — Guia explicado de forma simples</title>
+    <style>
+      :root {
+        --bg: #0d0d12;
+        --surface: #15151d;
+        --surface2: #1b1b25;
+        --text: #f3f2f7;
+        --muted: #b6b4c4;
+        --accent: #ff9f43;
+        --accent2: #ffd0a0;
+        --line: #30303d;
+        --code: #0a0a0f;
+        --good: #9fe3bd;
+        --radius: 18px;
       }
-    }), {rootMargin:'-15% 0px -75% 0px'});
-    headings.forEach(h => observer.observe(h));
-  }
-  window.addEventListener('pagehide', () => {});
-})(); 
-</script>
-<script>
- // ---------- Demo ao vivo: porta em JS da mesma lógica do projeto Python ----------
-
-  // Landmarks usados (mesmos índices de detection/pose_landmarks.py)
-
-  const IDX = {
-
-    left_shoulder: 11, right_shoulder: 12,
-
-    left_elbow: 13, right_elbow: 14,
-
-    left_wrist: 15, right_wrist: 16,
-
-    left_hip: 23, right_hip: 24,
-
-  };
-
-  const CONNECTIONS = [
-
-    [11,12],[11,13],[13,15],[12,14],[14,16],
-
-    [11,23],[12,24],[23,24],
-
-    [23,25],[25,27],[24,26],[26,28],
-
-  ];
-
-
-
-  const MIN_CONF = 0.5;
-
-  const WRIST_MARGIN = 0.035;
-
-  const REQUIRED_FRAMES = 5;
-
-  const MAX_DIST = 0.18;
-
-  const MAX_MISSED = 8;
-
-  const WINDOW_MS = 10000;
-
-
-
-  function vis(landmarks, i){
-
-    const p = landmarks[i];
-
-    if (!p) return 0;
-
-    const v = p.visibility ?? 1, pr = p.presence ?? 1;
-
-    return Math.min(v, pr);
-
-  }
-
-
-
-  function isRaised(landmarks, side){
-
-    const s = side === 'left' ? IDX.left_shoulder : IDX.right_shoulder;
-
-    const e = side === 'left' ? IDX.left_elbow : IDX.right_elbow;
-
-    const w = side === 'left' ? IDX.left_wrist : IDX.right_wrist;
-
-    const h = side === 'left' ? IDX.left_hip : IDX.right_hip;
-
-    const wristAboveShoulder = landmarks[w].y < landmarks[s].y - WRIST_MARGIN;
-
-    const hipConf = vis(landmarks, h);
-
-    if (hipConf < MIN_CONF) return wristAboveShoulder;
-
-    const elbowAboveHip = landmarks[e].y < landmarks[h].y;
-
-    return wristAboveShoulder && elbowAboveHip;
-
-  }
-
-
-
-  function evaluateArms(landmarks){
-
-    const leftConf = Math.min(vis(landmarks, IDX.left_shoulder), vis(landmarks, IDX.left_elbow), vis(landmarks, IDX.left_wrist));
-
-    const rightConf = Math.min(vis(landmarks, IDX.right_shoulder), vis(landmarks, IDX.right_elbow), vis(landmarks, IDX.right_wrist));
-
-    const leftConfident = leftConf >= MIN_CONF, rightConfident = rightConf >= MIN_CONF;
-
-    if (!leftConfident && !rightConfident) return null;
-
-    return {
-
-      leftRaised: leftConfident && isRaised(landmarks, 'left'),
-
-      rightRaised: rightConfident && isRaised(landmarks, 'right'),
-
-      leftConfident, rightConfident,
-
-    };
-
-  }
-
-
-
-  function center(landmarks){
-
-    const l = landmarks[IDX.left_shoulder], r = landmarks[IDX.right_shoulder];
-
-    return [(l.x + r.x) / 2, (l.y + r.y) / 2];
-
-  }
-
-
-
-  function dist(a, b){ return Math.hypot(a[0]-b[0], a[1]-b[1]); }
-
-
-
-  class Tracker{
-
-    constructor(){ this.tracks = new Map(); this.nextId = 1; }
-
-    update(posesLandmarks){
-
-      const candidates = [];
-
-      for (const [tid, t] of this.tracks){
-
-        posesLandmarks.forEach((lm, pi) => candidates.push([dist(center(lm), t.center), tid, pi]));
-
-      }
-
-      candidates.sort((a,b) => a[0]-b[0]);
-
-      const matchedTracks = new Set(), matchedPoses = new Set();
-
-      const active = [];
-
-      for (const [d, tid, pi] of candidates){
-
-        if (d > MAX_DIST || matchedTracks.has(tid) || matchedPoses.has(pi)) continue;
-
-        const t = this.tracks.get(tid);
-
-        t.center = center(posesLandmarks[pi]);
-
-        t.landmarks = posesLandmarks[pi];
-
-        t.missed = 0;
-
-        matchedTracks.add(tid); matchedPoses.add(pi);
-
-        active.push(t);
-
-      }
-
-      posesLandmarks.forEach((lm, pi) => {
-
-        if (matchedPoses.has(pi)) return;
-
-        const id = 'track_' + (this.nextId++);
-
-        const t = { id, center: center(lm), landmarks: lm, missed: 0,
-
-          leftRaised:false, rightRaised:false, candidateState:null, candidateFrames:0, initialized:false };
-
-        this.tracks.set(id, t);
-
-        active.push(t);
-
-      });
-
-      for (const [tid, t] of Array.from(this.tracks)){
-
-        if (matchedTracks.has(tid)) continue;
-
-        t.missed++;
-
-        if (t.missed > MAX_MISSED) this.tracks.delete(tid);
-
-      }
-
-      return active;
-
-    }
-
-  }
-
-
-
-  class Aggregator{
-
-    constructor(){ this.reset(); }
-
-    reset(){ this.windowStart = performance.now(); this.peopleSamples = []; this.participants = new Set(); this.armEvents = 0; }
-
-    ingest(peopleCount, newlyRaisedTrackIds){
-
-      this.peopleSamples.push(peopleCount);
-
-      newlyRaisedTrackIds.forEach(id => { this.participants.add(id); this.armEvents++; });
-
-      const elapsed = performance.now() - this.windowStart;
-
-      if (elapsed < WINDOW_MS) return { remainingMs: WINDOW_MS - elapsed, report: null };
-
-      const avg = this.peopleSamples.length ? this.peopleSamples.reduce((a,b)=>a+b,0) / this.peopleSamples.length : 0;
-
-      const report = {
-
-        people_average: Math.round(avg * 100) / 100,
-
-        people_max: this.peopleSamples.length ? Math.max(...this.peopleSamples) : 0,
-
-        participating_people: this.participants.size,
-
-        arm_raise_events: this.armEvents,
-
-        participation_ratio: avg > 0 ? Math.round((this.participants.size / avg) * 1000) / 1000 : 0,
-
-      };
-
-      this.reset();
-
-      return { remainingMs: WINDOW_MS, report };
-
-    }
-
-  }
-
-
-
-  // ---------- DOM wiring ----------
-
-  const btn = document.getElementById('liveToggle');
-
-  const video = document.getElementById('liveVideo');
-
-  const canvas = document.getElementById('liveCanvas');
-
-  const overlayMsg = document.getElementById('liveOverlayMsg');
-
-  const modelState = document.getElementById('liveModelState');
-
-  const mPeople = document.getElementById('mPeople');
-
-  const mArms = document.getElementById('mArms');
-
-  const mRatio = document.getElementById('mRatio');
-
-  const mWindow = document.getElementById('mWindow');
-
-  const badgesEl = document.getElementById('liveBadges');
-
-  const consoleEl = document.getElementById('liveConsole');
-
-
-
-  let ctx = canvas.getContext('2d');
-
-  let stream = null, poseLandmarker = null, running = false, rafId = null;
-
-  const tracker = new Tracker();
-
-  const aggregator = new Aggregator();
-
-
-
-  function logLine(text){
-
-    const div = document.createElement('div');
-
-    div.className = 'live-console-line';
-
-    div.textContent = text;
-
-    consoleEl.appendChild(div);
-
-    consoleEl.scrollTop = consoleEl.scrollHeight;
-
-    while (consoleEl.children.length > 12) consoleEl.removeChild(consoleEl.firstChild);
-
-  }
-
-
-
-  async function ensureModel(){
-
-    if (poseLandmarker) return poseLandmarker;
-
-    modelState.textContent = 'baixando modelo…';
-
-    const { PoseLandmarker, FilesetResolver } = await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14');
-
-    const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
-
-    poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
-
-      baseOptions: {
-
-        modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',
-
-      },
-
-      runningMode: 'VIDEO',
-
-      numPoses: 4,
-
-      minPoseDetectionConfidence: 0.5,
-
-      minPosePresenceConfidence: 0.5,
-
-      minTrackingConfidence: 0.5,
-
-    });
-
-    modelState.textContent = 'modelo pronto';
-
-    return poseLandmarker;
-
-  }
-
-
-
-  function drawFrame(tracks){
-
-    const w = canvas.width, h = canvas.height;
-
-    ctx.clearRect(0, 0, w, h);
-
-    for (const t of tracks){
-
-      const pts = t.landmarks.map(p => [p.x * w, p.y * h]);
-
-      ctx.strokeStyle = '#FFB454'; ctx.lineWidth = 2;
-
-      for (const [a,b] of CONNECTIONS){
-
-        if (!pts[a] || !pts[b]) continue;
-
-        ctx.beginPath(); ctx.moveTo(pts[a][0], pts[a][1]); ctx.lineTo(pts[b][0], pts[b][1]); ctx.stroke();
-
-      }
-
-      ctx.fillStyle = '#8CFF7A';
-
-      for (const [x,y] of pts){ ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2); ctx.fill(); }
-
-    }
-
-  }
-
-
-
-  function analyzeTrack(t){
-
-    const evaluated = evaluateArms(t.landmarks);
-
-    if (!evaluated) return { newlyRaised: false };
-
-    const candidate = [
-
-      evaluated.leftConfident ? evaluated.leftRaised : t.leftRaised,
-
-      evaluated.rightConfident ? evaluated.rightRaised : t.rightRaised,
-
-    ];
-
-    const same = t.candidateState && t.candidateState[0] === candidate[0] && t.candidateState[1] === candidate[1];
-
-    if (same) t.candidateFrames++; else { t.candidateState = candidate; t.candidateFrames = 1; }
-
-    if (t.candidateFrames < REQUIRED_FRAMES) return { newlyRaised: false };
-
-
-
-    const previous = [t.leftRaised, t.rightRaised];
-
-    t.leftRaised = candidate[0]; t.rightRaised = candidate[1];
-
-    t.initialized = true;
-
-    const newlyRaised = (!previous[0] && candidate[0]) || (!previous[1] && candidate[1]);
-
-    return { newlyRaised };
-
-  }
-
-
-
-  function tick(){
-
-    if (!running) return;
-
-    const now = performance.now();
-
-    const result = poseLandmarker.detectForVideo(video, now);
-
-    const posesLandmarks = result.landmarks || [];
-
-    const tracks = tracker.update(posesLandmarks);
-
-
-
-    let newlyRaisedIds = [];
-
-    let armsUp = 0;
-
-    for (const t of tracks){
-
-      const { newlyRaised } = analyzeTrack(t);
-
-      if (newlyRaised) newlyRaisedIds.push(t.id);
-
-      if (t.leftRaised) armsUp++;
-
-      if (t.rightRaised) armsUp++;
-
-    }
-
-
-
-    drawFrame(tracks);
-
-
-
-    mPeople.textContent = tracks.length;
-
-    mArms.textContent = armsUp;
-
-    badgesEl.innerHTML = '';
-
-    tracks.forEach(t => {
-
-      const span = document.createElement('span');
-
-      const on = t.leftRaised || t.rightRaised;
-
-      span.className = 'badge' + (on ? ' on' : '');
-
-      span.textContent = `${t.id}: ${t.leftRaised ? 'ESQ↑' : 'esq↓'} ${t.rightRaised ? 'DIR↑' : 'dir↓'}`;
-
-      badgesEl.appendChild(span);
-
-    });
-
-
-
-    const { remainingMs, report } = aggregator.ingest(tracks.length, newlyRaisedIds);
-
-    mWindow.textContent = Math.max(0, Math.round(remainingMs / 1000)) + 's';
-
-    if (report){
-
-      mRatio.textContent = report.participation_ratio;
-
-      logLine('{ people_avg: ' + report.people_average + ', participating: ' + report.participating_people +
-
-        ', ratio: ' + report.participation_ratio + ' }');
-
-    }
-
-
-
-    rafId = requestAnimationFrame(tick);
-
-  }
-
-
-
-  async function start(){
-
-    btn.textContent = 'Ligando câmera…';
-
-    btn.disabled = true;
-
-    try{
-
-      stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
-
-      video.srcObject = stream;
-
-      await video.play();
-
-      await new Promise(r => { if (video.readyState >= 2) r(); else video.onloadedmetadata = r; });
-
-      canvas.width = video.videoWidth || 640;
-
-      canvas.height = video.videoHeight || 480;
-
-    } catch (err){
-
-      overlayMsg.textContent = 'Não foi possível acessar a câmera (' + err.message + '). Verifique as permissões do navegador.';
-
-      overlayMsg.style.display = 'flex';
-
-      btn.textContent = 'Ligar câmera';
-
-      btn.disabled = false;
-
-      return;
-
-    }
-
-    try{
-
-      await ensureModel();
-
-    } catch (err){
-
-      overlayMsg.textContent = 'Câmera ligada, mas não deu para baixar o modelo do MediaPipe (é preciso internet liberada para cdn.jsdelivr.net e storage.googleapis.com). Detalhe: ' + err.message;
-
-      overlayMsg.style.display = 'flex';
-
-      modelState.textContent = 'modelo indisponível';
-
-      btn.textContent = 'Ligar câmera';
-
-      btn.disabled = false;
-
-      stream.getTracks().forEach(tr => tr.stop());
-
-      stream = null;
-
-      return;
-
-    }
-
-    overlayMsg.style.display = 'none';
-
-    running = true;
-
-    btn.textContent = 'Desligar câmera';
-
-    btn.classList.add('stop');
-
-    btn.disabled = false;
-
-    logLine('// câmera ligada — detectando poses localmente');
-
-    tick();
-
-  }
-
-
-
-  function stop(){
-
-    running = false;
-
-    if (rafId) cancelAnimationFrame(rafId);
-
-    if (stream) stream.getTracks().forEach(tr => tr.stop());
-
-    stream = null;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    overlayMsg.textContent = 'Clique em "Ligar câmera" para começar';
-
-    overlayMsg.style.display = 'flex';
-
-    btn.textContent = 'Ligar câmera';
-
-    btn.classList.remove('stop');
-
-    badgesEl.innerHTML = '';
-
-    mPeople.textContent = '0'; mArms.textContent = '0'; mRatio.textContent = '–'; mWindow.textContent = '10s';
-
-  }
-
-
-
-  btn.addEventListener('click', () => { running ? stop() : start(); });
-</script>
-</body></html>
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 28px;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(ellipse at top left, #241b24 0, transparent 36%),
+          var(--bg);
+        color: var(--text);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.72;
+      }
+      a {
+        color: var(--accent2);
+      }
+      .progress {
+        position: fixed;
+        z-index: 20;
+        inset: 0 0 auto;
+        height: 4px;
+        background: #292832;
+      }
+      .progress span {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: var(--accent);
+        transition: width 0.12s;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 270px minmax(0, 1fr);
+        max-width: 1440px;
+        margin: auto;
+        min-height: 100vh;
+      }
+      aside {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: auto;
+        padding: 28px 18px 28px 24px;
+        border-right: 1px solid var(--line);
+        background: rgba(13, 13, 18, 0.88);
+        backdrop-filter: blur(14px);
+      }
+      .brand {
+        font-weight: 800;
+        font-size: 1.15rem;
+        letter-spacing: -0.03em;
+        color: #fff;
+      }
+      .brand span {
+        color: var(--accent);
+      }
+      .brand-sub {
+        font-size: 0.83rem;
+        color: var(--muted);
+        margin: 4px 0 22px;
+      }
+      .nav-label {
+        margin: 20px 10px 8px;
+        color: #8f8d9c;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-weight: 800;
+      }
+      nav {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      nav a {
+        color: #c7c5d1;
+        text-decoration: none;
+        font-size: 0.83rem;
+        line-height: 1.4;
+        padding: 9px 10px;
+        border-radius: 10px;
+        transition: 0.2s;
+      }
+      nav a:hover,
+      nav a.active {
+        background: #28222a;
+        color: var(--accent2);
+      }
+      main {
+        width: 100%;
+        max-width: 980px;
+        padding: 60px clamp(22px, 5vw, 76px) 80px;
+        margin: 0 auto;
+      }
+      .hero {
+        padding: 34px 0 30px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 30px;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-weight: 800;
+      }
+      .eyebrow:before {
+        content: "";
+        width: 20px;
+        height: 2px;
+        background: currentColor;
+      }
+      .hero h1 {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        letter-spacing: -0.055em;
+        line-height: 1.08;
+        margin: 16px 0;
+      }
+      .hero p {
+        font-size: 1.1rem;
+        color: var(--muted);
+        max-width: 740px;
+      }
+      .hero-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 22px;
+      }
+      .pill {
+        border: 1px solid #3b3540;
+        border-radius: 999px;
+        padding: 7px 12px;
+        color: #e7d9ca;
+        font-size: 0.8rem;
+        background: #1a171d;
+      }
+      article > h2 {
+        font-size: clamp(1.45rem, 3vw, 2rem);
+        letter-spacing: -0.035em;
+        line-height: 1.2;
+        margin: 64px 0 18px;
+        padding-top: 18px;
+      }
+      article > h1 {
+        font-size: clamp(1.7rem, 4vw, 2.6rem);
+        line-height: 1.18;
+        letter-spacing: -0.04em;
+        margin: 28px 0 18px;
+      }
+      h3 {
+        font-size: 1.18rem;
+        line-height: 1.3;
+        margin: 28px 0 8px;
+        color: #fff;
+      }
+      p {
+        margin: 12px 0;
+        color: #d5d3de;
+      }
+      strong {
+        color: #fff;
+      }
+      blockquote {
+        margin: 24px 0;
+        padding: 18px 22px;
+        border-left: 3px solid var(--accent);
+        background: #1c1920;
+        border-radius: 0 14px 14px 0;
+        color: #e8dfe8;
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 38px 0;
+      }
+      ul,
+      ol {
+        padding-left: 1.4rem;
+        color: #d5d3de;
+      }
+      li {
+        margin: 7px 0;
+        padding-left: 3px;
+      }
+      li::marker {
+        color: var(--accent);
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 0.88em;
+        color: #ffd0a0;
+        background: #29212b;
+        border: 1px solid #3a303c;
+        padding: 0.13em 0.36em;
+        border-radius: 6px;
+      }
+      pre {
+        overflow: auto;
+        padding: 20px;
+        background: var(--code);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        line-height: 1.6;
+      }
+      pre code {
+        background: none;
+        border: 0;
+        padding: 0;
+        color: #e9e7ef;
+        font-size: 0.85rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        display: block;
+        overflow-x: auto;
+        border-radius: 12px;
+        margin: 18px 0;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        min-width: 130px;
+      }
+      th {
+        background: #27212a;
+        color: var(--accent2);
+        font-size: 0.86rem;
+      }
+      td {
+        background: #15151d;
+        color: #d7d5df;
+        font-size: 0.9rem;
+      }
+      article > p:first-of-type {
+        max-width: 820px;
+      }
+      .camera-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        padding: 22px;
+        margin: 26px 0;
+        background: linear-gradient(135deg, #211c25, #15151d);
+        border: 1px solid #3a303c;
+        border-radius: var(--radius);
+      }
+      .camera-demo h3 {
+        margin-top: 9px;
+        font-size: 1.45rem;
+      }
+      .camera-demo p {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .primary-btn {
+        border: 0;
+        border-radius: 10px;
+        padding: 11px 16px;
+        background: var(--accent);
+        color: #24170c;
+        font-weight: 800;
+        cursor: pointer;
+        font-size: 0.92rem;
+      }
+      .primary-btn:hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+      }
+      .camera-status {
+        font-size: 0.8rem !important;
+      }
+      .video-frame {
+        position: relative;
+        min-height: 220px;
+        background: #09090c;
+        border: 1px solid #39333d;
+        border-radius: 13px;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        align-self: stretch;
+      }
+      video {
+        width: 100%;
+        height: 100%;
+        min-height: 220px;
+        object-fit: cover;
+        display: none;
+      }
+      .video-placeholder {
+        text-align: center;
+        color: #777482;
+        padding: 18px;
+      }
+      .video-placeholder span {
+        font-size: 2.6rem;
+        color: #a5a0af;
+      }
+      .video-placeholder p {
+        font-size: 0.8rem;
+      }
+      .callout {
+        padding: 15px 18px;
+        border: 1px solid #4b3c2d;
+        background: #211b17;
+        border-radius: 12px;
+        margin: 18px 0;
+      }
+      .callout strong {
+        color: var(--accent2);
+      }
+      .footer {
+        border-top: 1px solid var(--line);
+        padding-top: 25px;
+        margin-top: 60px;
+        color: #9d9aa9;
+        font-size: 0.85rem;
+      }
+      .backtop {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        border: 1px solid #50424a;
+        background: #211c24;
+        color: var(--accent2);
+        border-radius: 50px;
+        padding: 10px 14px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        box-shadow: 0 8px 24px #0005;
+      }
+      .menu-toggle {
+        display: none;
+      }
+      @media (max-width: 900px) {
+        .layout {
+          display: block;
+        }
+        aside {
+          position: sticky;
+          z-index: 15;
+          top: 4px;
+          height: auto;
+          padding: 12px 18px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .brand-sub {
+          margin: 0;
+        }
+        .menu-toggle {
+          display: block;
+          float: right;
+          background: transparent;
+          color: var(--text);
+          border: 1px solid var(--line);
+          padding: 7px 10px;
+          border-radius: 9px;
+        }
+        nav {
+          display: none;
+          max-height: 55vh;
+          overflow: auto;
+          margin-top: 12px;
+        }
+        nav.open {
+          display: flex;
+        }
+        .nav-label {
+          display: none;
+        }
+        main {
+          padding-top: 28px;
+        }
+        .hero {
+          padding-top: 24px;
+        }
+      }
+      @media (max-width: 600px) {
+        .camera-demo {
+          grid-template-columns: 1fr;
+          padding: 16px;
+        }
+        main {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+        article > h2 {
+          margin-top: 48px;
+        }
+        .backtop {
+          right: 12px;
+          bottom: 12px;
+        }
+      }
+
+      /* Tema claro: cores de leitura com contraste, mantendo o laranja do projeto */
+      html[data-theme="light"] {
+        color-scheme: light;
+        --bg: #f5f6fa;
+        --surface: #ffffff;
+        --surface2: #eef0f5;
+        --text: #20212a;
+        --muted: #626575;
+        --accent: #b85c00;
+        --accent2: #914700;
+        --line: #d9dce5;
+        --code: #f0f1f6;
+        --good: #176b43;
+      }
+      html[data-theme="light"] body {
+        background:
+          radial-gradient(ellipse at top left, #fff0df 0, transparent 38%),
+          var(--bg);
+        color: var(--text);
+      }
+      html[data-theme="light"] aside {
+        background: rgba(255, 255, 255, 0.92);
+      }
+      html[data-theme="light"] .brand {
+        color: #20212a;
+      }
+      html[data-theme="light"] nav a {
+        color: #454755;
+      }
+      html[data-theme="light"] nav a:hover,
+      html[data-theme="light"] nav a.active {
+        background: #fff0df;
+        color: #914700;
+      }
+      html[data-theme="light"] .hero p,
+      html[data-theme="light"] p,
+      html[data-theme="light"] ul,
+      html[data-theme="light"] ol {
+        color: #424452;
+      }
+      html[data-theme="light"] h3,
+      html[data-theme="light"] strong {
+        color: #20212a;
+      }
+      html[data-theme="light"] .pill {
+        border-color: #e4d1bd;
+        color: #75400f;
+        background: #fff8f0;
+      }
+      html[data-theme="light"] blockquote {
+        background: #fff3e7;
+        color: #424452;
+      }
+      html[data-theme="light"] code {
+        color: #874400;
+        background: #fff0df;
+        border-color: #efd7bd;
+      }
+      html[data-theme="light"] pre {
+        background: #f0f1f6;
+      }
+      html[data-theme="light"] pre code {
+        color: #292a33;
+        background: transparent;
+      }
+      html[data-theme="light"] th {
+        background: #fff0df;
+        color: #814000;
+      }
+      html[data-theme="light"] td {
+        background: #fff;
+        color: #424452;
+      }
+      html[data-theme="light"] .camera-demo {
+        background: linear-gradient(135deg, #fff4e8, #fff);
+        border-color: #ead7c5;
+      }
+      html[data-theme="light"] .camera-demo p {
+        color: #626575;
+      }
+      html[data-theme="light"] .callout {
+        border-color: #e8c9a7;
+        background: #fff6ec;
+      }
+      html[data-theme="light"] .callout strong {
+        color: #814000;
+      }
+      html[data-theme="light"] .backtop {
+        border-color: #e0c8b1;
+        background: #fff8f0;
+        color: #814000;
+      }
+      html[data-theme="light"] .progress {
+        background: #e5e5ec;
+      }
+      html[data-theme="light"] .menu-toggle {
+        color: #20212a;
+      }
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 16px 0 4px;
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: var(--surface2);
+        color: var(--text);
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 750;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .theme-toggle:hover {
+        border-color: var(--accent);
+      }
+      .theme-toggle:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+      }
+      html[data-theme="light"] .theme-toggle {
+        background: #fff;
+        color: #20212a;
+      }
+      @media (max-width: 900px) {
+        .theme-toggle {
+          margin: 10px 0 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+
+      /* Demonstração real de pose com MediaPipe */
+      .live-panel {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 22px;
+        padding: 22px;
+      }
+      .live-body {
+        display: grid;
+        grid-template-columns: 1fr 270px;
+      }
+      .live-media {
+        min-width: 0;
+      }
+      .live-video-wrap {
+        position: relative;
+        aspect-ratio: 4/3;
+        min-height: 250px;
+        background: #09090d;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+      .live-video,
+      .live-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scaleX(-1);
+      }
+      .live-video {
+        display: block;
+        min-height: 0;
+      }
+      .live-canvas {
+        z-index: 2;
+      }
+      .live-overlay-msg {
+        position: absolute;
+        z-index: 3;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+        color: #fff;
+        background: rgba(9, 9, 13, 0.62);
+      }
+      .live-overlay-msg[hidden] {
+        display: none;
+      }
+      .live-console {
+        margin-top: 12px;
+        padding: 12px 14px;
+        background: var(--code);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        max-height: 150px;
+        overflow: auto;
+        font:
+          0.78rem/1.5 ui-monospace,
+          SFMono-Regular,
+          Consolas,
+          monospace;
+        color: var(--text);
+      }
+      .live-console-line {
+        margin: 3px 0;
+      }
+      .metric-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+        margin: 16px 0;
+      }
+      .metric-card {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: var(--surface2);
+        border: 1px solid var(--line);
+      }
+      .metric-label {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--muted);
+        line-height: 1.35;
+      }
+      .metric-value {
+        display: block;
+        font-size: 1.45rem;
+        line-height: 1.4;
+        color: var(--text);
+      }
+      .badge-row {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .badge-row .badge {
+        padding: 7px 10px;
+        border-radius: 9px;
+        background: var(--surface2);
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .badge-row .badge.on {
+        background: #176b43;
+        color: #fff;
+      }
+      .live-btn.stop {
+        background: #d94f3d;
+        color: white;
+      }
+      .live-btn:disabled {
+        opacity: 0.65;
+        cursor: wait;
+      }
+      #liveModelState {
+        font-weight: 700;
+      }
+      @media (min-width: 900px) {
+        .live-panel {
+          grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+          align-items: start;
+        }
+      }
+      @media (max-width: 640px) {
+        .live-panel {
+          padding: 14px;
+        }
+        .live-video-wrap {
+          min-height: 190px;
+        }
+        .metric-value {
+          font-size: 1.25rem;
+        }
+      }
+
+      .questionnaire {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 150px;
+        gap: 24px;
+        align-items: center;
+        margin-top: 26px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+      }
+      .questionnaire h3 {
+        margin: 0 0 8px;
+        color: var(--text);
+      }
+      .questionnaire p {
+        color: var(--muted);
+        margin: 8px 0 16px;
+      }
+      .questionnaire .primary-btn {
+        display: inline-block;
+        text-decoration: none;
+      }
+      .questionnaire-qr {
+        width: 140px;
+        max-width: 100%;
+        height: auto;
+        padding: 8px;
+        background: #fff;
+        border-radius: 10px;
+        justify-self: center;
+      }
+      .questionnaire-qr-caption {
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      html[data-theme="light"] .questionnaire p {
+        color: #424452;
+      }
+      @media (max-width: 520px) {
+        .questionnaire {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .questionnaire-qr {
+          width: 150px;
+        }
+      }
+    </style>
+  </head>
+  <body id="topo">
+    <div aria-hidden="true" class="progress">
+      <span id="progressBar"></span>
+    </div>
+    <div class="layout">
+      <aside>
+        <button
+          aria-controls="siteNav"
+          aria-expanded="false"
+          class="menu-toggle"
+          id="menuToggle"
+        >
+          Menu ☰
+        </button>
+        <div class="brand">EmotiAI <span>Vision</span></div>
+        <div class="brand-sub">Um guia passo a passo, sem complicação</div>
+        <button
+          aria-label="Ativar modo claro"
+          aria-pressed="false"
+          class="theme-toggle"
+          id="themeToggle"
+          type="button"
+        >
+          ☀️ <span id="themeToggleLabel">Ativar modo claro</span>
+        </button>
+        <div class="nav-label">Explore o guia</div>
+        <nav id="siteNav">
+          <a href="#início">Início</a>
+          <a href="#experimente-com-sua-câmera">Experimente com sua câmera</a>
+          <a href="#como-o-sistema-funciona">Como o sistema funciona</a>
+          <a href="#passo-1-captura-de-vídeo">Passo 1 — Captura de vídeo</a>
+          <a href="#passo-2-detecção-de-pose">Passo 2 — Detecção de pose</a>
+          <a href="#passo-3-rastreamento">Passo 3 — Rastreamento</a>
+          <a href="#passo-4-análise-de-postura">Passo 4 — Análise de postura</a>
+          <a href="#passo-5-eventos">Passo 5 — Eventos</a>
+          <a href="#passo-6-métricas-agregadas">Passo 6 — Métricas agregadas</a>
+          <a href="#passo-7-visualização-de-depuração"
+            >Passo 7 — Visualização de depuração</a
+          >
+          <a href="#passo-8-o-loop-principal">Passo 8 — O loop principal</a>
+          <a href="#configurações-do-projeto">Configurações do projeto</a>
+          <a href="#como-executar-o-projeto">Como executar o projeto</a>
+          <a href="#para-lembrar">Para lembrar</a>
+        </nav>
+      </aside>
+      <main>
+        <header class="hero">
+          <div class="eyebrow">Aprenda explorando</div>
+          <h1>Entenda como o EmotiAI Vision observa movimentos</h1>
+          <p>
+            Veja como o sistema detecta movimentos e organiza os resultados.
+          </p>
+          <div class="hero-pills">
+            <span class="pill">✦ Linguagem simples</span
+            ><span class="pill">↗ Exemplos do dia a dia</span
+            ><span class="pill">⌘ Código explicado</span>
+          </div>
+        </header>
+        <article>
+          <hr />
+          <h2 id="início">Início</h2>
+          <h1 id="como-o-emotiai-vision-observa-movimentos-em-uma-sala">
+            Como o EmotiAI Vision observa movimentos em uma sala?
+          </h1>
+          <p>
+            O EmotiAI Vision analisa imagens da câmera para identificar
+            movimentos do corpo, como levantar a mão.
+          </p>
+          <p>
+            O sistema captura a imagem, identifica pontos do corpo, acompanha as
+            pessoas e verifica se os braços estão levantados. Depois, reúne os
+            resultados em métricas.
+          </p>
+          <p>
+            <strong>Importante:</strong> o sistema identifica movimentos
+            visíveis. Não consegue determinar pensamentos, emoções, atenção ou
+            aprendizado.
+          </p>
+
+          <p>
+            <strong>Não tenta descobrir quem é a pessoa</strong><br />
+            Analisa pontos do corpo, como ombros, cotovelos e punhos, sem
+            precisar reconhecer o rosto.
+          </p>
+          <p>
+            <strong>Não guarda vídeos ou fotos no computador</strong><br />
+            As imagens são analisadas durante a execução, sem serem salvas como
+            vídeos ou fotos; o programa reúne informações numéricas.
+          </p>
+          <p>
+            <strong>Os códigos de acompanhamento são temporários</strong><br />
+            Códigos como <code>track_1</code> e <code>track_2</code> ajudam a
+            acompanhar movimentos durante a execução. Não identificam pessoas e
+            são temporários.
+          </p>
+          <hr />
+          <h2 id="experimente-com-sua-câmera">Experimente com sua câmera</h2>
+          <h1 id="vamos-testar">Vamos testar?</h1>
+          <p>
+            Permita o acesso à câmera, fique de frente para ela e levante um
+            braço para testar a detecção.
+          </p>
+          <div
+            aria-label="Demonstração ao vivo de detecção de pose"
+            class="camera-demo live-panel"
+          >
+            <div class="camera-copy">
+              <span class="eyebrow">Experiência interativa</span>
+              <h3>Vamos testar os gestos?</h3>
+              <p>
+                Ative a câmera e levante um ou os dois braços para testar o
+                modelo.
+              </p>
+              <button
+                class="primary-btn live-btn"
+                id="liveToggle"
+                type="button"
+              >
+                Ligar câmera
+              </button>
+              <p class="camera-status" id="liveModelState" role="status">
+                Modelo ainda não carregado.
+              </p>
+              <p class="camera-status" id="liveOverlayHint">
+                A câmera só será ativada quando você clicar no botão.
+              </p>
+              <div class="metric-grid">
+                <div class="metric-card">
+                  <span class="metric-label">Pessoas detectadas</span
+                  ><strong class="metric-value" id="mPeople">0</strong>
+                </div>
+                <div class="metric-card">
+                  <span class="metric-label">Braços levantados</span
+                  ><strong class="metric-value" id="mArms">0</strong>
+                </div>
+                <div class="metric-card">
+                  <span class="metric-label">Participação</span
+                  ><strong class="metric-value" id="mRatio">–</strong>
+                </div>
+                <div class="metric-card">
+                  <span class="metric-label">Próximo resumo</span
+                  ><strong class="metric-value" id="mWindow">10s</strong>
+                </div>
+              </div>
+              <h3>Detecções atuais</h3>
+              <div class="badge-row" id="liveBadges">
+                <span class="badge">Nenhuma pessoa detectada ainda.</span>
+              </div>
+            </div>
+            <div class="live-media">
+              <div class="live-video-wrap">
+                <video
+                  autoplay=""
+                  class="live-video"
+                  id="liveVideo"
+                  muted=""
+                  playsinline=""
+                ></video>
+                <canvas class="live-canvas" id="liveCanvas"></canvas>
+                <div class="live-overlay-msg" id="liveOverlayMsg">
+                  Clique em “Ligar câmera” para começar.
+                </div>
+              </div>
+              <div aria-live="polite" class="live-console" id="liveConsole">
+                <div class="live-console-line">
+                  Aguardando início da demonstração…
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>
+            Linhas laranjas e pontos verdes indicam as partes do corpo
+            detectadas. O modelo é carregado pela internet e a análise ocorre no
+            navegador.
+          </p>
+          <h3 id="o-que-significam-os-números">O que significam os números?</h3>
+          <ul>
+            <li>
+              <strong>Pessoas agora:</strong> quantas pessoas o sistema
+              conseguiu detectar neste momento.
+            </li>
+            <li>
+              <strong>Braços levantados:</strong> quantas pessoas estão com um
+              ou mais braços reconhecidos como levantados.
+            </li>
+            <li>
+              <strong>Participação (10 s):</strong> um resumo calculado para uma
+              janela de 10 segundos, de acordo com as regras do projeto. Isso
+              não mede interesse, aprendizado ou atenção.
+            </li>
+            <li>
+              <strong>Próxima janela em:</strong> quanto falta para o sistema
+              preparar o próximo resumo.
+            </li>
+          </ul>
+          <p>
+            Se a detecção não funcionar, confira a conexão com a internet e a
+            permissão de uso da câmera no navegador.
+          </p>
+          <hr />
+          <h2 id="como-o-sistema-funciona">Como o sistema funciona</h2>
+          <h1 id="o-caminho-da-imagem-oito-etapas">
+            O caminho da imagem: oito etapas
+          </h1>
+
+          <ol type="1">
+            <li>
+              <strong>Captura:</strong> a câmera entrega uma imagem ao programa.
+            </li>
+            <li>
+              <strong>Detecção de pose:</strong> o sistema procura pontos do
+              corpo, como ombros, cotovelos e punhos.
+            </li>
+            <li>
+              <strong>Rastreamento:</strong> o programa tenta descobrir quais
+              pontos de uma imagem correspondem à mesma pessoa na imagem
+              seguinte.
+            </li>
+            <li>
+              <strong>Análise de postura:</strong> o programa verifica se os
+              pontos indicam que um braço está levantado.
+            </li>
+            <li>
+              <strong>Eventos:</strong> quando algo muda, como um braço subir ou
+              descer, o sistema registra essa mudança.
+            </li>
+            <li>
+              <strong>Resumo das métricas:</strong> depois de um intervalo, o
+              programa junta os registros e calcula números.
+            </li>
+            <li>
+              <strong>Visualização de depuração:</strong> durante os testes, o
+              programa pode desenhar os pontos e as linhas sobre a imagem.
+            </li>
+            <li>
+              <strong>Loop principal:</strong> é a parte que organiza a ordem
+              das tarefas e faz o processo se repetir.
+            </li>
+          </ol>
+
+          <hr />
+          <h2 id="passo-1-captura-de-vídeo">Passo 1 — Captura de vídeo</h2>
+          <h1 id="a-câmera-entrega-a-imagem">1. A câmera entrega a imagem</h1>
+          <p><strong>Arquivo:</strong> <code>camera/capture.py</code></p>
+          <p>
+            A câmera captura imagens chamadas <em>frames</em>, que são
+            analisadas em sequência.
+          </p>
+          <p>
+            A classe <code>CameraCapture</code> acessa a câmera e configura
+            resolução, frequência de análise e rotação.
+          </p>
+          <h2 id="passo-2-detecção-de-pose">Passo 2 — Detecção de pose</h2>
+          <h1 id="o-sistema-procura-pontos-do-corpo">
+            2. O sistema procura pontos do corpo
+          </h1>
+          <p>
+            <strong>Arquivo:</strong> <code>detection/pose_detector.py</code>
+          </p>
+          <p>
+            Agora que a imagem chegou, o sistema precisa encontrar partes do
+            corpo. Para isso, o projeto usa o
+            <strong>MediaPipe Pose Landmarker</strong>, uma ferramenta que
+            estima pontos do corpo em uma imagem.
+          </p>
+          <p>
+            Esses pontos são chamados de <em>landmarks</em>. Entre eles estão os
+            ombros, os cotovelos, os punhos, os quadris e pontos das pernas. O
+            modelo usado pelo projeto pode identificar até 33 pontos para cada
+            pose detectada.
+          </p>
+          <h2 id="passo-3-rastreamento">Passo 3 — Rastreamento</h2>
+          <h1 id="como-o-sistema-acompanha-a-mesma-pessoa">
+            3. Como o sistema acompanha a mesma pessoa?
+          </h1>
+          <p><strong>Arquivo:</strong> <code>tracking/tracker.py</code></p>
+          <p>
+            Imagine que duas pessoas estejam na frente da câmera. Em uma imagem,
+            o sistema encontra dois conjuntos de pontos. Na imagem seguinte, ele
+            encontra os pontos novamente. Como pode tentar saber qual conjunto
+            corresponde a cada pessoa?
+          </p>
+          <p>
+            É para isso que serve o
+            <strong>rastreamento</strong> (<em>tracking</em>). O programa
+            compara a posição dos pontos entre imagens consecutivas. Neste
+            projeto, ele usa principalmente a proximidade entre os centros dos
+            ombros.
+          </p>
+          <h2 id="passo-4-análise-de-postura">Passo 4 — Análise de postura</h2>
+          <h1 id="como-o-sistema-percebe-um-braço-levantado">
+            4. Como o sistema percebe um braço levantado?
+          </h1>
+          <p>
+            <strong>Arquivos:</strong> <code>analysis/arm_detection.py</code> e
+            <code>analysis/posture_detection.py</code>
+          </p>
+          <p>
+            O sistema já encontrou os pontos do corpo e está tentando
+            acompanhá-los. Agora ele verifica uma pergunta específica:
+            <strong
+              >a posição dos pontos indica que um braço está levantado?</strong
+            >
+          </p>
+          <p>
+            Para responder, o programa compara a altura de pontos como o punho,
+            o ombro, o cotovelo e, quando está visível, o quadril.
+          </p>
+          <h2 id="passo-5-eventos">Passo 5 — Eventos</h2>
+          <h1 id="como-o-sistema-registra-o-que-aconteceu">
+            5. Como o sistema registra o que aconteceu?
+          </h1>
+          <p><strong>Arquivo:</strong> <code>events/event.py</code></p>
+          <p>
+            Quando algo importante muda, o programa cria um
+            <strong>evento</strong>. Um evento é como uma anotação curta em um
+            caderno: registra o que aconteceu e em que momento.
+          </p>
+          <p>Alguns exemplos de eventos que o projeto reconhece são:</p>
+          <ul>
+            <li>Uma pessoa foi detectada.</li>
+            <li>Uma pessoa deixou de ser acompanhada.</li>
+            <li>O braço esquerdo foi reconhecido como levantado.</li>
+            <li>O braço direito foi reconhecido como levantado.</li>
+            <li>Os dois braços foram reconhecidos como levantados.</li>
+          </ul>
+          <p>
+            Cada evento pode guardar informações como o tipo de mudança, o
+            identificador temporário da pessoa, o nível de confiança e o momento
+            em que ocorreu.
+          </p>
+          <h2 id="passo-6-métricas-agregadas">Passo 6 — Métricas agregadas</h2>
+          <h1 id="de-muitos-acontecimentos-para-um-resumo">
+            6. De muitos acontecimentos para um resumo
+          </h1>
+          <p>
+            <strong>Arquivos:</strong> <code>analysis/aggregator.py</code> e
+            <code>analysis/participation.py</code>
+          </p>
+          <p>
+            Até aqui, o sistema recebeu muitas imagens e pode ter identificado
+            várias mudanças. Ler cada acontecimento separadamente seria
+            trabalhoso. Por isso, o projeto reúne os resultados em intervalos de
+            tempo.
+          </p>
+          <p>
+            O tempo padrão de cada intervalo é <strong>10 segundos</strong>.
+            Esse período é chamado de <em>janela de agregação</em>.
+          </p>
+          <h2 id="passo-7-visualização-de-depuração">
+            Passo 7 — Visualização de depuração
+          </h2>
+          <h1 id="por-que-aparecem-linhas-e-pontos-sobre-o-corpo">
+            7. Por que aparecem linhas e pontos sobre o corpo?
+          </h1>
+          <p><strong>Arquivo:</strong> <code>debug/renderer.py</code></p>
+          <p>
+            Durante o desenvolvimento, é útil ver o que o sistema está
+            detectando. A parte chamada <code>DebugRenderer</code> desenha
+            pontos e linhas sobre a imagem da câmera.
+          </p>
+          <p>
+            As bolinhas indicam os pontos estimados do corpo, enquanto as linhas
+            ligam esses pontos para formar uma espécie de esqueleto. Assim, quem
+            está testando o projeto consegue observar se o sistema encontrou os
+            ombros, os cotovelos e os punhos nas posições esperadas.
+          </p>
+          <h2 id="passo-8-o-loop-principal">Passo 8 — O loop principal</h2>
+          <h1 id="como-tudo-funciona-junto">8. Como tudo funciona junto?</h1>
+          <p><strong>Arquivo:</strong> <code>main.py</code></p>
+          <p>
+            Cada etapa tem uma tarefa, mas alguém precisa organizar a ordem em
+            que elas acontecem. Esse é o trabalho do arquivo
+            <code>main.py</code>, que funciona como o maestro de uma orquestra.
+          </p>
+          <p>Ele coordena o processo:</p>
+          <ol type="1">
+            <li>Recebe uma imagem da câmera.</li>
+            <li>Envia a imagem para encontrar os pontos do corpo.</li>
+            <li>Tenta acompanhar as pessoas entre as imagens.</li>
+            <li>Analisa a posição dos braços.</li>
+            <li>Registra as mudanças importantes.</li>
+            <li>Atualiza e reúne as métricas.</li>
+            <li>Mostra a visualização de depuração, se ela estiver ativada.</li>
+            <li>Repete o processo enquanto o programa estiver funcionando.</li>
+          </ol>
+          <h2 id="configurações-do-projeto">Configurações do projeto</h2>
+          <h1 id="o-que-é-possível-ajustar">O que é possível ajustar?</h1>
+          <p><strong>Arquivo:</strong> <code>config/settings.py</code></p>
+
+          <table>
+            <colgroup>
+              <col style="width: 30%" />
+              <col style="width: 40%" />
+              <col style="width: 30%" />
+            </colgroup>
+            <thead>
+              <tr class="header">
+                <th>Configuração</th>
+                <th style="text-align: right">Valor padrão</th>
+                <th>O que significa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="odd">
+                <td><code>frame_width / frame_height</code></td>
+                <td style="text-align: right">1280 × 720</td>
+                <td>
+                  A largura e a altura solicitadas para a imagem da câmera.
+                </td>
+              </tr>
+              <tr class="even">
+                <td><code>rotation</code></td>
+                <td style="text-align: right">180°</td>
+                <td>A rotação aplicada à imagem.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>max_poses</code></td>
+                <td style="text-align: right">10</td>
+                <td>
+                  O número máximo de poses que o sistema tenta detectar em uma
+                  imagem.
+                </td>
+              </tr>
+              <tr class="even">
+                <td><code>min_landmark_confidence</code></td>
+                <td style="text-align: right">0,5</td>
+                <td>
+                  O nível mínimo de confiança usado para considerar um ponto
+                  válido, conforme a implementação do projeto.
+                </td>
+              </tr>
+              <tr class="odd">
+                <td><code>target_processing_fps</code></td>
+                <td style="text-align: right">10</td>
+                <td>
+                  A quantidade aproximada de imagens que o sistema pretende
+                  analisar por segundo.
+                </td>
+              </tr>
+              <tr class="even">
+                <td><code>required_consecutive_frames</code></td>
+                <td style="text-align: right">5</td>
+                <td>
+                  Quantos frames seguidos são exigidos para confirmar uma
+                  mudança de postura.
+                </td>
+              </tr>
+              <tr class="odd">
+                <td><code>aggregation_window_seconds</code></td>
+                <td style="text-align: right">10 segundos</td>
+                <td>
+                  A duração de cada intervalo usado para montar um resumo.
+                </td>
+              </tr>
+              <tr class="even">
+                <td><code>tracker_max_distance</code></td>
+                <td style="text-align: right">0,18</td>
+                <td>
+                  A distância máxima permitida para relacionar uma pose nova a
+                  um acompanhamento existente.
+                </td>
+              </tr>
+              <tr class="odd">
+                <td><code>tracker_max_missed_frames</code></td>
+                <td style="text-align: right">8</td>
+                <td>
+                  Quantos frames podem passar sem atualização antes de o
+                  acompanhamento ser considerado perdido.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            Os valores padrão são os definidos no guia do projeto. Dependendo da
+            câmera, da iluminação e da posição das pessoas, pode ser necessário
+            testar configurações diferentes.
+          </p>
+          <hr />
+          <h2 id="como-executar-o-projeto">Como executar o projeto</h2>
+          <h1 id="vamos-colocar-o-emotiai-vision-para-funcionar">
+            Vamos colocar o EmotiAI Vision para funcionar?
+          </h1>
+
+          <p>O guia do projeto lista estas dependências:</p>
+          <ul>
+            <li>
+              <code>mediapipe</code> — ajuda a estimar os pontos do corpo.
+            </li>
+            <li>
+              <code>opencv-python</code> — ajuda a acessar e trabalhar com
+              imagens da câmera.
+            </li>
+            <li>
+              <code>numpy</code> — oferece ferramentas para trabalhar com dados
+              numéricos.
+            </li>
+          </ul>
+          <h3 id="comandos-de-execução">Comandos de execução</h3>
+          <p>
+            No terminal, entre na pasta do projeto e execute o programa usando o
+            Python do ambiente virtual configurado:
+          </p>
+          <div class="sourceCode" id="cb1">
+            <pre
+              class="sourceCode bash"
+            ><code class="sourceCode bash"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="bu">cd</span> app/computacional-vision</span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="ex">./venv/bin/python</span> main.py</span></code></pre>
+          </div>
+
+          <p>
+            Se a janela de depuração estiver aberta, o guia do projeto indica
+            que a tecla <strong>Q</strong> pode ser usada para encerrar essa
+            janela.
+          </p>
+
+          <hr />
+          <h2 id="para-lembrar">Para lembrar</h2>
+
+          <p>
+            Este guia foi elaborado a partir da descrição e dos trechos de
+            código fornecidos para o EmotiAI Vision, projeto de Ciência da
+            Computação da UNIP Limeira.
+          </p>
+          <section aria-labelledby="questionario-titulo" class="questionnaire">
+            <div>
+              <h3 id="questionario-titulo">
+                Vamos testar o que você aprendeu?
+              </h3>
+              <p>
+                Responda a um questionário rápido sobre o EmotiAI Vision e ajude
+                a avaliar a clareza do tutorial.
+              </p>
+              <a
+                class="primary-btn"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScOfixrVxQPMYNjgBPqpvtexdq4K1ceA0YKCY2bz2FtdlNn5g/viewform?usp=dialog"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Responder ao questionário ↗</a
+              >
+            </div>
+            <div>
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScOfixrVxQPMYNjgBPqpvtexdq4K1ceA0YKCY2bz2FtdlNn5g/viewform?usp=dialog"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Abrir questionário pelo QR Code"
+                ><img
+                  class="questionnaire-qr"
+                  alt="QR Code para abrir o questionário do EmotiAI Vision"
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWUAAAFlAQAAAAAb/sQWAAAEEElEQVR4nO1bQa7qOBCsJhk5O3MDcxNzs5ibOTdJbmAWIyWSSc2infAWBP1Z/CeQXBsglFCrZbu6q40Qf47l9D/IQGVXdmX/EnsREZEWmK6giFwGOQGYrhDpANwoIiLy9yP5SjbI2ZJcGyYXe8mGJIVMQA8YMvZrQ5KBnD8n7g9jTyIA7IgbWwAAW1jG29rczwCAReT6K5F8OXu69uR8v+AGLGd4nmAScPv9SL6J3T7f3j3Bf/51CcCjg/gILN2vRfKt7Oc5OMNFSDapPByBFYZ6RtZz8BjkDABoZjv6sL582ZmfE/fnsMEnRs+ST33p0ZSHBTWDr9nLGUOQdjm7eDsBlgwinR29cOmAIZwe3ZP9NyP5SjZIJsfADMAHyYBj0JNvg3C2o6/n4CF7OWOgtCa5CJrZDldIXuQyBEqHSWSFmXz8hUi+kg2SHAHJANCvUC3OJgE9s0lu1+m6Bl+DnOFiD5gET8mGI7A2qiSFkmGrkrxhmwQv5GzHQWjm+8VTlg4ughl29Dw1TNqafFTcn8Ne3DgEERFPro8OwA3NvP/UIOuju4vw70fyleytotYjL4hu2BUmOYYVgIu9aNtSd/FrlFJai+cg2ST4wLylDvBc1eSqGXwNkgmeUgSlmQEfdoE2pKqMq2vwHdvdwqM1CV4km+RuAQ85Y2+IJS/nqXrUb9leNEukiBuuPQ2nC3oxd5FeVm31fiWSb2UPQaSzjFpKezk9xI2DrA+bXIS0AIaqxW/Y01Ul2QuwnLELtGTYcftU68EDFNHQzq1f8bMnEU3k2swlkZ8T9+ewNzuanFEsGm2B9+980MavZvAAJUsA7Og3IwuAev6AiyifagZfg2QCyoCkZzbknjqttsPazLbOSQ5BkowAtAtRP4vZcEQZtVMFpfYkb9m9etSyNnc3AtLi7iPw6DBdwdZMPlYtPgBL79vMlnHTFcnYH+oarM7CIVSEyWxIBjTFb4UdfRCSjL2QyVVn4QjU9KyAHfeH8ixxgF6rw6rFh+zFDb0I57uPZVwCAHcfe7awoxc8utoXH2Nbg81sR/Tr9thw3CqdXuW67uIDaEVN2cZyTI7EU1cYNYO1HjxCSc820dxuHikyLKP2zDWDRyg9ydb7ZhRlTmrvJxd7NEy1qzuE7tTNjSneTMGqRQ3UYa0ZPGKXUbtWM/uGtYy9ZDNdnhfkPizuz2GXu/xm8tyuabHF/aJ+q4tgizovfsvWCfFynq5AM2O6QjLsIEHMblWTddJ0gO3Cb8METwBWnRrL2P+g1WnnIfYMznZUi8aRosbgpjIAUN2tI/xYg47UGTugS1HU+tfLH7WaOcDP/zQx6AWPrZ1bmxmq03UXH+PnXf5y51IvzJQOxZX2pPbFB5D6/+LKruwvZ/8HnqakEZB6g88AAAAASUVORK5CYII="
+              /></a>
+              <div class="questionnaire-qr-caption">
+                Aponte a câmera do celular
+              </div>
+            </div>
+          </section>
+          <div class="footer">
+            Guia educativo do projeto <strong>EmotiAI Vision</strong> — Ciência
+            da Computação, UNIP Limeira.<br />O sistema estima movimentos
+            visíveis; não identifica pessoas nem mede sentimentos, atenção ou
+            aprendizado.
+          </div>
+        </article>
+      </main>
+    </div>
+    <a aria-label="Voltar ao topo" class="backtop" href="#topo" id="backTop"
+      >↑ Início</a
+    >
+    <script>
+      (() => {
+        const bar = document.getElementById("progressBar");
+        const nav = document.getElementById("siteNav");
+        const menuToggle = document.getElementById("menuToggle");
+        const themeToggle = document.getElementById("themeToggle");
+        const themeToggleLabel = document.getElementById("themeToggleLabel");
+        const applyTheme = (theme) => {
+          document.documentElement.dataset.theme = theme;
+          const isLight = theme === "light";
+          themeToggle.setAttribute("aria-pressed", String(isLight));
+          themeToggle.setAttribute(
+            "aria-label",
+            isLight ? "Ativar modo escuro" : "Ativar modo claro",
+          );
+          themeToggleLabel.textContent = isLight
+            ? "Ativar modo escuro"
+            : "Ativar modo claro";
+          themeToggle.firstChild.textContent = isLight ? "🌙 " : "☀️ ";
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute("content", isLight ? "#f5f6fa" : "#101014");
+        };
+        let savedTheme = "dark";
+        try {
+          savedTheme = localStorage.getItem("emotiai-theme") || "dark";
+        } catch (e) {}
+        applyTheme(savedTheme === "light" ? "light" : "dark");
+        themeToggle.addEventListener("click", () => {
+          const nextTheme =
+            document.documentElement.dataset.theme === "light"
+              ? "dark"
+              : "light";
+          applyTheme(nextTheme);
+          try {
+            localStorage.setItem("emotiai-theme", nextTheme);
+          } catch (e) {}
+        });
+        const updateProgress = () => {
+          const max =
+            document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
+        };
+        window.addEventListener("scroll", updateProgress, { passive: true });
+        updateProgress();
+        menuToggle.addEventListener("click", () => {
+          const open = nav.classList.toggle("open");
+          menuToggle.setAttribute("aria-expanded", String(open));
+        });
+        nav
+          .querySelectorAll("a")
+          .forEach((a) =>
+            a.addEventListener("click", () => nav.classList.remove("open")),
+          );
+        const headings = [...document.querySelectorAll("article h2[id]")];
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            (entries) =>
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  nav
+                    .querySelectorAll("a")
+                    .forEach((a) =>
+                      a.classList.toggle(
+                        "active",
+                        a.hash === "#" + entry.target.id,
+                      ),
+                    );
+                }
+              }),
+            { rootMargin: "-15% 0px -75% 0px" },
+          );
+          headings.forEach((h) => observer.observe(h));
+        }
+        window.addEventListener("pagehide", () => {});
+      })();
+    </script>
+    <script>
+      // ---------- Demo ao vivo: porta em JS da mesma lógica do projeto Python ----------
+
+      // Landmarks usados (mesmos índices de detection/pose_landmarks.py)
+
+      const IDX = {
+        left_shoulder: 11,
+        right_shoulder: 12,
+
+        left_elbow: 13,
+        right_elbow: 14,
+
+        left_wrist: 15,
+        right_wrist: 16,
+
+        left_hip: 23,
+        right_hip: 24,
+      };
+
+      const CONNECTIONS = [
+        [11, 12],
+        [11, 13],
+        [13, 15],
+        [12, 14],
+        [14, 16],
+
+        [11, 23],
+        [12, 24],
+        [23, 24],
+
+        [23, 25],
+        [25, 27],
+        [24, 26],
+        [26, 28],
+      ];
+
+      const MIN_CONF = 0.5;
+
+      const WRIST_MARGIN = 0.035;
+
+      const REQUIRED_FRAMES = 5;
+
+      const MAX_DIST = 0.18;
+
+      const MAX_MISSED = 8;
+
+      const WINDOW_MS = 10000;
+
+      function vis(landmarks, i) {
+        const p = landmarks[i];
+
+        if (!p) return 0;
+
+        const v = p.visibility ?? 1,
+          pr = p.presence ?? 1;
+
+        return Math.min(v, pr);
+      }
+
+      function isRaised(landmarks, side) {
+        const s = side === "left" ? IDX.left_shoulder : IDX.right_shoulder;
+
+        const e = side === "left" ? IDX.left_elbow : IDX.right_elbow;
+
+        const w = side === "left" ? IDX.left_wrist : IDX.right_wrist;
+
+        const h = side === "left" ? IDX.left_hip : IDX.right_hip;
+
+        const wristAboveShoulder =
+          landmarks[w].y < landmarks[s].y - WRIST_MARGIN;
+
+        const hipConf = vis(landmarks, h);
+
+        if (hipConf < MIN_CONF) return wristAboveShoulder;
+
+        const elbowAboveHip = landmarks[e].y < landmarks[h].y;
+
+        return wristAboveShoulder && elbowAboveHip;
+      }
+
+      function evaluateArms(landmarks) {
+        const leftConf = Math.min(
+          vis(landmarks, IDX.left_shoulder),
+          vis(landmarks, IDX.left_elbow),
+          vis(landmarks, IDX.left_wrist),
+        );
+
+        const rightConf = Math.min(
+          vis(landmarks, IDX.right_shoulder),
+          vis(landmarks, IDX.right_elbow),
+          vis(landmarks, IDX.right_wrist),
+        );
+
+        const leftConfident = leftConf >= MIN_CONF,
+          rightConfident = rightConf >= MIN_CONF;
+
+        if (!leftConfident && !rightConfident) return null;
+
+        return {
+          leftRaised: leftConfident && isRaised(landmarks, "left"),
+
+          rightRaised: rightConfident && isRaised(landmarks, "right"),
+
+          leftConfident,
+          rightConfident,
+        };
+      }
+
+      function center(landmarks) {
+        const l = landmarks[IDX.left_shoulder],
+          r = landmarks[IDX.right_shoulder];
+
+        return [(l.x + r.x) / 2, (l.y + r.y) / 2];
+      }
+
+      function dist(a, b) {
+        return Math.hypot(a[0] - b[0], a[1] - b[1]);
+      }
+
+      class Tracker {
+        constructor() {
+          this.tracks = new Map();
+          this.nextId = 1;
+        }
+
+        update(posesLandmarks) {
+          const candidates = [];
+
+          for (const [tid, t] of this.tracks) {
+            posesLandmarks.forEach((lm, pi) =>
+              candidates.push([dist(center(lm), t.center), tid, pi]),
+            );
+          }
+
+          candidates.sort((a, b) => a[0] - b[0]);
+
+          const matchedTracks = new Set(),
+            matchedPoses = new Set();
+
+          const active = [];
+
+          for (const [d, tid, pi] of candidates) {
+            if (d > MAX_DIST || matchedTracks.has(tid) || matchedPoses.has(pi))
+              continue;
+
+            const t = this.tracks.get(tid);
+
+            t.center = center(posesLandmarks[pi]);
+
+            t.landmarks = posesLandmarks[pi];
+
+            t.missed = 0;
+
+            matchedTracks.add(tid);
+            matchedPoses.add(pi);
+
+            active.push(t);
+          }
+
+          posesLandmarks.forEach((lm, pi) => {
+            if (matchedPoses.has(pi)) return;
+
+            const id = "track_" + this.nextId++;
+
+            const t = {
+              id,
+              center: center(lm),
+              landmarks: lm,
+              missed: 0,
+
+              leftRaised: false,
+              rightRaised: false,
+              candidateState: null,
+              candidateFrames: 0,
+              initialized: false,
+            };
+
+            this.tracks.set(id, t);
+
+            active.push(t);
+          });
+
+          for (const [tid, t] of Array.from(this.tracks)) {
+            if (matchedTracks.has(tid)) continue;
+
+            t.missed++;
+
+            if (t.missed > MAX_MISSED) this.tracks.delete(tid);
+          }
+
+          return active;
+        }
+      }
+
+      class Aggregator {
+        constructor() {
+          this.reset();
+        }
+
+        reset() {
+          this.windowStart = performance.now();
+          this.peopleSamples = [];
+          this.participants = new Set();
+          this.armEvents = 0;
+        }
+
+        ingest(peopleCount, newlyRaisedTrackIds) {
+          this.peopleSamples.push(peopleCount);
+
+          newlyRaisedTrackIds.forEach((id) => {
+            this.participants.add(id);
+            this.armEvents++;
+          });
+
+          const elapsed = performance.now() - this.windowStart;
+
+          if (elapsed < WINDOW_MS)
+            return { remainingMs: WINDOW_MS - elapsed, report: null };
+
+          const avg = this.peopleSamples.length
+            ? this.peopleSamples.reduce((a, b) => a + b, 0) /
+              this.peopleSamples.length
+            : 0;
+
+          const report = {
+            people_average: Math.round(avg * 100) / 100,
+
+            people_max: this.peopleSamples.length
+              ? Math.max(...this.peopleSamples)
+              : 0,
+
+            participating_people: this.participants.size,
+
+            arm_raise_events: this.armEvents,
+
+            participation_ratio:
+              avg > 0
+                ? Math.round((this.participants.size / avg) * 1000) / 1000
+                : 0,
+          };
+
+          this.reset();
+
+          return { remainingMs: WINDOW_MS, report };
+        }
+      } // ---------- DOM wiring ----------
+
+      const btn = document.getElementById("liveToggle");
+
+      const video = document.getElementById("liveVideo");
+
+      const canvas = document.getElementById("liveCanvas");
+
+      const overlayMsg = document.getElementById("liveOverlayMsg");
+
+      const modelState = document.getElementById("liveModelState");
+
+      const mPeople = document.getElementById("mPeople");
+
+      const mArms = document.getElementById("mArms");
+
+      const mRatio = document.getElementById("mRatio");
+
+      const mWindow = document.getElementById("mWindow");
+
+      const badgesEl = document.getElementById("liveBadges");
+
+      const consoleEl = document.getElementById("liveConsole");
+
+      let ctx = canvas.getContext("2d");
+
+      let stream = null,
+        poseLandmarker = null,
+        running = false,
+        rafId = null;
+
+      const tracker = new Tracker();
+
+      const aggregator = new Aggregator();
+
+      function logLine(text) {
+        const div = document.createElement("div");
+
+        div.className = "live-console-line";
+
+        div.textContent = text;
+
+        consoleEl.appendChild(div);
+
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+
+        while (consoleEl.children.length > 12)
+          consoleEl.removeChild(consoleEl.firstChild);
+      }
+
+      async function ensureModel() {
+        if (poseLandmarker) return poseLandmarker;
+
+        modelState.textContent = "baixando modelo…";
+
+        const { PoseLandmarker, FilesetResolver } =
+          await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14");
+
+        const vision = await FilesetResolver.forVisionTasks(
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm",
+        );
+
+        poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath:
+              "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+          },
+
+          runningMode: "VIDEO",
+
+          numPoses: 4,
+
+          minPoseDetectionConfidence: 0.5,
+
+          minPosePresenceConfidence: 0.5,
+
+          minTrackingConfidence: 0.5,
+        });
+
+        modelState.textContent = "modelo pronto";
+
+        return poseLandmarker;
+      }
+
+      function drawFrame(tracks) {
+        const w = canvas.width,
+          h = canvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        for (const t of tracks) {
+          const pts = t.landmarks.map((p) => [p.x * w, p.y * h]);
+
+          ctx.strokeStyle = "#FFB454";
+          ctx.lineWidth = 2;
+
+          for (const [a, b] of CONNECTIONS) {
+            if (!pts[a] || !pts[b]) continue;
+
+            ctx.beginPath();
+            ctx.moveTo(pts[a][0], pts[a][1]);
+            ctx.lineTo(pts[b][0], pts[b][1]);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = "#8CFF7A";
+
+          for (const [x, y] of pts) {
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      function analyzeTrack(t) {
+        const evaluated = evaluateArms(t.landmarks);
+
+        if (!evaluated) return { newlyRaised: false };
+
+        const candidate = [
+          evaluated.leftConfident ? evaluated.leftRaised : t.leftRaised,
+
+          evaluated.rightConfident ? evaluated.rightRaised : t.rightRaised,
+        ];
+
+        const same =
+          t.candidateState &&
+          t.candidateState[0] === candidate[0] &&
+          t.candidateState[1] === candidate[1];
+
+        if (same) t.candidateFrames++;
+        else {
+          t.candidateState = candidate;
+          t.candidateFrames = 1;
+        }
+
+        if (t.candidateFrames < REQUIRED_FRAMES) return { newlyRaised: false };
+
+        const previous = [t.leftRaised, t.rightRaised];
+
+        t.leftRaised = candidate[0];
+        t.rightRaised = candidate[1];
+
+        t.initialized = true;
+
+        const newlyRaised =
+          (!previous[0] && candidate[0]) || (!previous[1] && candidate[1]);
+
+        return { newlyRaised };
+      }
+
+      function tick() {
+        if (!running) return;
+
+        const now = performance.now();
+
+        const result = poseLandmarker.detectForVideo(video, now);
+
+        const posesLandmarks = result.landmarks || [];
+
+        const tracks = tracker.update(posesLandmarks);
+
+        let newlyRaisedIds = [];
+
+        let armsUp = 0;
+
+        for (const t of tracks) {
+          const { newlyRaised } = analyzeTrack(t);
+
+          if (newlyRaised) newlyRaisedIds.push(t.id);
+
+          if (t.leftRaised) armsUp++;
+
+          if (t.rightRaised) armsUp++;
+        }
+
+        drawFrame(tracks);
+
+        mPeople.textContent = tracks.length;
+
+        mArms.textContent = armsUp;
+
+        badgesEl.innerHTML = "";
+
+        tracks.forEach((t) => {
+          const span = document.createElement("span");
+
+          const on = t.leftRaised || t.rightRaised;
+
+          span.className = "badge" + (on ? " on" : "");
+
+          span.textContent = `${t.id}: ${t.leftRaised ? "ESQ↑" : "esq↓"} ${t.rightRaised ? "DIR↑" : "dir↓"}`;
+
+          badgesEl.appendChild(span);
+        });
+
+        const { remainingMs, report } = aggregator.ingest(
+          tracks.length,
+          newlyRaisedIds,
+        );
+
+        mWindow.textContent = Math.max(0, Math.round(remainingMs / 1000)) + "s";
+
+        if (report) {
+          mRatio.textContent = report.participation_ratio;
+
+          logLine(
+            "{ people_avg: " +
+              report.people_average +
+              ", participating: " +
+              report.participating_people +
+              ", ratio: " +
+              report.participation_ratio +
+              " }",
+          );
+        }
+
+        rafId = requestAnimationFrame(tick);
+      }
+
+      async function start() {
+        btn.textContent = "Ligando câmera…";
+
+        btn.disabled = true;
+
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: { width: 640, height: 480 },
+          });
+
+          video.srcObject = stream;
+
+          await video.play();
+
+          await new Promise((r) => {
+            if (video.readyState >= 2) r();
+            else video.onloadedmetadata = r;
+          });
+
+          canvas.width = video.videoWidth || 640;
+
+          canvas.height = video.videoHeight || 480;
+        } catch (err) {
+          overlayMsg.textContent =
+            "Não foi possível acessar a câmera (" +
+            err.message +
+            "). Verifique as permissões do navegador.";
+
+          overlayMsg.style.display = "flex";
+
+          btn.textContent = "Ligar câmera";
+
+          btn.disabled = false;
+
+          return;
+        }
+
+        try {
+          await ensureModel();
+        } catch (err) {
+          overlayMsg.textContent =
+            "Câmera ligada, mas não deu para baixar o modelo do MediaPipe (é preciso internet liberada para cdn.jsdelivr.net e storage.googleapis.com). Detalhe: " +
+            err.message;
+
+          overlayMsg.style.display = "flex";
+
+          modelState.textContent = "modelo indisponível";
+
+          btn.textContent = "Ligar câmera";
+
+          btn.disabled = false;
+
+          stream.getTracks().forEach((tr) => tr.stop());
+
+          stream = null;
+
+          return;
+        }
+
+        overlayMsg.style.display = "none";
+
+        running = true;
+
+        btn.textContent = "Desligar câmera";
+
+        btn.classList.add("stop");
+
+        btn.disabled = false;
+
+        logLine("// câmera ligada — detectando poses localmente");
+
+        tick();
+      }
+
+      function stop() {
+        running = false;
+
+        if (rafId) cancelAnimationFrame(rafId);
+
+        if (stream) stream.getTracks().forEach((tr) => tr.stop());
+
+        stream = null;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        overlayMsg.textContent = 'Clique em "Ligar câmera" para começar';
+
+        overlayMsg.style.display = "flex";
+
+        btn.textContent = "Ligar câmera";
+
+        btn.classList.remove("stop");
+
+        badgesEl.innerHTML = "";
+
+        mPeople.textContent = "0";
+        mArms.textContent = "0";
+        mRatio.textContent = "–";
+        mWindow.textContent = "10s";
+      }
+
+      btn.addEventListener("click", () => {
+        running ? stop() : start();
+      });
+    </script>
+  </body>
+</html>
